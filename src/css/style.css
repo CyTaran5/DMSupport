@@ -1,0 +1,464 @@
+/* style.cs: BYU IT&C 210a Boilerplate Stylesheet */
+
+/* We use the Material Icons font in some of the styles. This brings in
+the corresponding fonts from Google Fonts. */
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+/* The root rule is the foundation for the whole page. These settings _cascade_
+to all elements unless they are overridden. */
+:root {
+	/* Change these variables according to your theme */
+	--primary: #ffffff;
+	--accent: #ffffff;
+	--delete: #ffffff;
+	--primary-text: #ffffff;
+	background-image: url("Stone.jpg");
+	
+	/* Window background and default font */
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/* These rules with element selectors apply to all elements of the corresonding names. In a sense, they
+are automatically applied */
+
+body {
+    max-width: 55rem;			  /* Keeps the page from overflowing on wide monitors */
+    margin: 0.5em auto;		      /* 0.5em is top and bottom margin. 'auto' for left and right centers the body on the page */
+    border: 1px solid black;	/* Surround the content with a solid black border */
+    border-radius: 5px;			  /* Round the corners of the body section */
+    padding: 0.75rem;			  /* Padding goes between the borders and the internal content */
+    background-color: white;	/* Contrast the body background from the page background */
+}
+
+h1 {
+	font-family: "Arial Black", Arial, sans-serif;
+	font-weight: bolder;
+}
+
+nav {
+    color: white;				/* Nav bar is white on very dark gray */
+    background-color: #1a237e;
+    padding: 0.75rem;			  /* Give the nav bar some internal padding */
+}
+
+nav a {
+    color: lightgray;		/* Links in the nav bar are light blue instead of white */
+    text-decoration: none;		  /* Don't underline links in the nav bar */
+}
+
+
+
+/* These with class selectors take effect when you apply the corresponding class name on an element */
+
+.checkbox {
+	width: 45px;
+  height: 15px;
+  background: #555;
+  margin: 20px 80px;
+  position: relative;
+  border-radius: 5px;
+}
+.allDone {
+	text-decoration: line-through
+}
+
+.tasklist {
+	padding-left: 0;		/* Remove padding that <ul> has by default */
+	list-style-type: none;	/* No bullets in the list */
+}
+
+.task {
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.task-done {
+	display: inline-block;
+	box-sizing: border-box;
+	color: green;
+	/* Add property to change checkbox icon color */
+}
+
+.task-description {
+	display: inline-block;
+	width: calc(100% - 12em);
+	box-sizing: border-box;
+	
+}
+
+.task-date {
+	display: inline-block;
+	width: 6em;
+}
+
+.task-delete {
+	display: inline-block;
+	box-sizing: border-box;
+	/* Add property to change delete icon color */
+}
+
+.material-icon {
+	border: none; /* No border */
+	background: none; /* Match the background of the parent */
+	font-family: 'Material Icons'; /* Use the icon font */
+	font-size: inherit; /* Input doesn't automatically inherit font size. This brings it in. */
+	cursor: pointer; /* Change the cursor to a pointer when hovering on this element */
+}
+
+/* Add your custom class rules here */
+.task-description-input {
+	display: inline-block;
+	width: calc(100% - 1em);
+	box-sizing: border-box;
+}
+
+.create-task {
+	background: none; /* Match the background of the parent */
+	font-size: inherit; /* Input doesn't automatically inherit font size. This brings it in. */
+	cursor: pointer; /* Change the cursor to a pointer when hovering on this element */
+	background-color: #000051;
+	border: 1px solid black;
+	border-radius: 5px;
+	font-weight: bold;
+	color: white;
+	text-shadow: 0 0 3px #0c0c0c, 0 0 5px #ff5e00;
+
+	/*Suggestions: You could change the background (`background-color:`) and foreground (`color:`)
+	 colors, change the border color or thickness (`border:`), make the text bold (`font-weight:`),
+	  round the corners (`border-radius:`), or do something else.*/
+}
+
+.background-image {
+	max-width: 100%;
+  	height: auto;
+}
+
+.button-86 {
+	padding: 0.6em 2em;
+	border: none;
+	outline: none;
+	color: rgb(255, 255, 255);
+	background: #111;
+	cursor: pointer;
+	position: relative;
+	z-index: 0;
+	border-radius: 10px;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+	font-weight: bold;
+  }
+  
+  .button-86:before {
+	content: "";
+	background: linear-gradient(
+	  45deg,
+	  #ff0000,
+	  #ff7300,
+	  #fffb00,
+	  #48ff00,
+	  #00ffd5,
+	  #002bff,
+	  #7a00ff,
+	  #ff00c8,
+	  #ff0000
+	);
+	position: absolute;
+	top: -2px;
+	left: -2px;
+	background-size: 400%;
+	z-index: -1;
+	filter: blur(5px);
+	-webkit-filter: blur(5px);
+	width: calc(100% + 4px);
+	height: calc(100% + 4px);
+	animation: glowing-button-86 20s linear infinite;
+	transition: opacity 0.3s ease-in-out;
+	border-radius: 10px;
+  }
+  
+  @keyframes glowing-button-86 {
+	0% {
+	  background-position: 0 0;
+	}
+	50% {
+	  background-position: 400% 0;
+	}
+	100% {
+	  background-position: 0 0;
+	}
+  }
+  
+  .button-86:after {
+	z-index: -1;
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: #000051;
+	left: 0;
+	top: 0;
+	border-radius: 10px;
+  }
+
+.button-85 {
+	padding: 0.6em 2em;
+	border: none;
+	outline: none;
+	color: rgb(255, 255, 255);
+	background: #111;
+	cursor: pointer;
+	position: relative;
+	z-index: 0;
+	border-radius: 10px;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+	font-weight: bold;
+  }
+  
+  .button-85:before {
+	content: "";
+	background: linear-gradient(
+	  45deg,
+	  #ff0000,
+	  #ff7300,
+	  #fffb00,
+	  #48ff00,
+	  #00ffd5,
+	  #002bff,
+	  #7a00ff,
+	  #ff00c8,
+	  #ff0000
+	);
+	position: absolute;
+	top: -2px;
+	left: -2px;
+	background-size: 400%;
+	z-index: -1;
+	filter: blur(5px);
+	-webkit-filter: blur(5px);
+	width: calc(100% + 4px);
+	height: calc(100% + 4px);
+	animation: glowing-button-85 20s linear infinite;
+	transition: opacity 0.3s ease-in-out;
+	border-radius: 10px;
+  }
+  
+  @keyframes glowing-button-85 {
+	0% {
+	  background-position: 0 0;
+	}
+	50% {
+	  background-position: 400% 0;
+	}
+	100% {
+	  background-position: 0 0;
+	}
+  }
+  
+  .button-85:after {
+	z-index: -1;
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: #000051;
+	left: 0;
+	top: 0;
+	border-radius: 10px;
+  }
+
+  .button-49,
+  .button-49:after {
+	width: 4em; /*150px*/
+	height: 1.8em; /*76px*/
+	line-height: 1.8em; /*78px*/
+	font-size: .8em; /*20px*/
+	font-family: 'Bebas Neue', sans-serif;
+	background: linear-gradient(45deg, transparent 5%, #d50000 5%);
+	border: 0px solid black;
+	color: #fff;
+	letter-spacing: 2px;
+	box-shadow: 6px 0px 0px #d50000;
+	outline: transparent;
+	position: relative;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+  }
+  
+  .button-49:after {
+	--slice-0: inset(50% 50% 50% 50%);
+	--slice-1: inset(80% -6px 0 0);
+	--slice-2: inset(50% -6px 30% 0);
+	--slice-3: inset(10% -6px 85% 0);
+	--slice-4: inset(40% -6px 43% 0);
+	--slice-5: inset(80% -6px 5% 0);
+	
+	content: 'ALTERNATE TEXT';
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: linear-gradient(45deg, transparent 3%, #00E6F6 3%, #00E6F6 5%, #FF013C 5%);
+	text-shadow: -3px -3px 0px #F8F005, 3px 3px 0px #00E6F6;
+	clip-path: var(--slice-0);
+  }
+  
+  .button-49:hover:after {
+	animation: 1s glitch;
+	animation-timing-function: steps(2, end);
+  }
+  
+  @keyframes glitch {
+	0% {
+	  clip-path: var(--slice-1);
+	  transform: translate(-2em, -1em); /*-20px, -10px*/
+	}
+	10% {
+	  clip-path: var(--slice-3);
+	  transform: translate(1em, 1em); /*10px, 10px*/
+	}
+	20% {
+	  clip-path: var(--slice-1);
+	  transform: translate(-1em, 1em); /*-10px, 10px*/
+	}
+	30% {
+	  clip-path: var(--slice-3);
+	  transform: translate(0em, .5em); /*0px, 5px*/
+	}
+	40% {
+	  clip-path: var(--slice-2);
+	  transform: translate(-.5em, 0em); /*-5px, 0px*/
+	}
+	50% {
+	  clip-path: var(--slice-3);
+	  transform: translate(.5em, 0em); /*5px, 0px*/
+	}
+	60% {
+	  clip-path: var(--slice-4);
+	  transform: translate(.5em, 1em); /*5px, 10px*/
+	}
+	70% {
+	  clip-path: var(--slice-2);
+	  transform: translate(-1em, 1em); /*-10px, 10px*/
+	}
+	80% {
+	  clip-path: var(--slice-5);
+	  transform: translate(-2em, -1em); /*-20px, -10px*/
+	}
+	90% {
+	  clip-path: var(--slice-1);
+	  transform: translate(-1em, 0em); /*-10px, 0px*/
+	}
+	100% {
+	  clip-path: var(--slice-1);
+	  transform: translate(0);
+	}
+  }
+  
+  @media (min-width: 768px) {
+	.button-49,
+	.button-49:after {
+	  width: 4em; /*200px*/
+	  height: 1.8em; /*86px*/
+	  line-height: 1.8em; /*88px*/
+	}
+  }
+
+
+  
+.example {
+	color: var(--primary-text);
+}
+
+/* Add rule for: */
+/* "Create Task" button border, background, and text */
+
+/* ===== checkbox-icon =============== */
+/* These three rules apply the checkbox icon from the Material Icons font to a checkbox */
+
+input.checkbox-icon {
+	font-family: 'Material Icons';
+    font-size: inherit;  /* Input doesn't automatically inherit font size. This brings it in. */
+	appearance: none;    /* Hide the existing checkbox so that the new rendering will overlay it */
+	cursor: pointer;     /* Change the cursor to a pointer when hovering on this element */
+}
+
+input.checkbox-icon:before {
+	content: 'check_box_outline_blank';
+}
+
+input.checkbox-icon:checked:before {
+	content: 'check_box';
+}
+
+/* ===== toggle-switch =============== */
+/* This is pretty advanced CSS and is intended to be ready-to-use. Just
+ * set an input of type checkbox to class 'toggle-switch' to make the
+ * control look like a switch instead of a checkbox.
+ * Example:
+ *     <input type='checkbox' name='cb1' class='toggle-switch'/><label for='cb1'>Lights</label>
+ *
+ * Adapted from: https://codeconvey.com/convert-checkbox-to-toggle-button-css/
+ * with important adjustments to make it senstive to the local font size.
+ * and the addition of comments.
+ */
+
+/* Toggle Switch */
+input.toggle-switch {
+	vertical-align: middle;
+    font-size: 1em;      /* Input doesn't automatically inherit font size. This brings it in. */
+	appearance: none;    /* Hide the existing checkbox so that the new rendering will overlay it */
+	position: relative;  /* Relative positioning holds this elements space and lets :before and :after pseudo-elements position relative to this */
+	cursor: pointer;     /* Change the cursor to a pointer when hovering on this element */
+	margin: 0em 0.2em;   /* No top and bottom margin. Make space to the left and right. Use 'em' units to keep space relative to local font size */
+    width: 1.4em; 		 /* Set the element width and height relative to the font size. */
+    height: 0.8em;
+}
+
+/* Use the :after pseudo-element to create an oval as the surface of the button. */
+input.toggle-switch:after {
+    vertical-align: middle;	/* Center this vertically */
+	content: '';            /* Empty text content. But still required to establish the element */
+	display: inline-block;  /* Inline-block makes it take up rectangular space */
+    position: absolute;	    /* Absolute positioning without left and top locates this exactly on top of the input.toggle-switch */
+	width: 1.4em;           /* Width and height of the oval */
+	height: 0.6em;
+	background-color: rgb(128,128,128); /* Light gray fill */
+	border-radius: 0.3em;   /* Border radius of half the height makes this an oval instead of a rectangle */
+}
+
+/* Use the :before pseudo-element to create a circle as the toggle handle */
+input.toggle-switch:before {
+    vertical-align: middle; /* Center this vertically thereby aligning to the background oval */
+	content: '';            /* Empty text content required to take up any space */
+	display: inline-block;  /* Inline-block makes it take up rectangular space */
+	position: absolute;		/* Absolute positioning without x and y locates this on top of the input.toggle-switch */
+	width: 0.7em;           /* Width and height are the same making it take up a square space which will be round with the border-radius */
+	height: 0.7em;
+    z-index: 1;				/* Z-index of 1 positions this on top of the input.toggle-switch:after */
+	left: 0;                /* Position at the left edge of the parent checkbox (it will shift right when activated) */
+	top: -0.1em;            /* Center it vertically on the background oval - tweaked to position just right */
+	border: 1px solid rgb(128,128,128); /* border is the same color as the background oval */
+	border-radius: 0.6em;   /* Radious greater than 1/2 the height/width makes a circle */
+	background-color: white;  /* Fill with white */
+	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); /* Cast a shadow on the background */
+	transition-duration: 0.3s; /* Animate turning on or off over 0.3 seconds */
+}
+
+/* Shift the handle to the right when turned on */
+input.toggle-switch:checked:before {
+	left: 0.7em;            /* When turned on, shift to the right */
+	box-shadow: -1px 1px 3px rgba(0, 0, 0, 0.6); /* When turned on, cast the shadow the other direction */
+}
+
+/* Change the background color to green when turned on */
+input.toggle-switch:checked:after {
+	background-color: #16a085;
+}
+
