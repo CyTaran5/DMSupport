@@ -1,0 +1,152 @@
+World:
+POST: https://(path)/sql
+Display World: 
+CREATE VIEW all_worlds AS SELECT * FROM world WHERE UserID = #.
+Host variables = UserID
+Create World:
+INSERT INTO world (W_Name, W_ID, Lore, USER_ID) VALUES (“-“, #, “-“, #).
+Host Variables: W_Name, Lore
+Update World: 
+UPDATE world set () = “ “ where E_ID = #
+Host variables = W_Name, Lore.
+Delete world:
+DELETE FROM world WHERE W_ID = #
+Host presses specific delete button when sends W_ID as variable to the statement.
+
+Entity:
+POST: https://(path)/sql
+Display: 
+create view all_entities as select entity.E_Name, entity.Type, stat.S_Name, stat.S_Value from entity INNER JOIN stat on entity.E_ID = stat.E_ID where entity.UserID = # 
+Create: 
+INSERT INTO entity (E_Name, E_Details, Player_Notes, Type) Values (“-“, “-“, “-“, “-“); 
+Host variables: E_Name, E_Details, Player_Notes, Type.
+Update: 
+UPDATE entity SET () = “ “ where E_ID = #. 
+Host variables: host can choose to update any combination of  E_Name, E_Details, Player_Notes, or Type
+Delete: 
+Delete FROM entity WHERE E_ID = #.
+Host presses delete button when sends E_ID as variable to the statement.
+
+Items:
+POST: https://(path)/sql
+Display: 
+CREATE VIEW all_items AS SELECT item.I_Name, stat.S_Name, stat.S_Value FROM item INNER JOIN stat ON item.I_ID = stat.I_ID WHERE item.UserID = #
+Create: 
+INSERT INTO item (I_Name, I_Details, Item_Notes, I_ID, User_ID)  Values ("-", "-", “-", #, #).
+Host variables: I_Name, I_Details, Item_Notes..
+Update: 
+UPDATE item SET () = “ “. where I_ID = #.
+Host variables: I_Name, I_Details, Item_Notes.
+Delete: 
+DELETE FROM item WHERE I_ID = #
+Host presses specific delete button when sends I_ID as variable to the statement.
+
+
+Locations:
+POST: https://(path)/sql
+Display:
+CREATE VIEW all_locations AS SELECT * FROM location WHERE UserID = #.
+Host variables = UserID
+Create: 
+INSERT INTO locations VALUES (L-Name, L_Description, L_ID) VALUES ( “-”, “-”).
+Host variables: L_Name, L_Description.
+Update: 
+UPDATE location SET () = “ “.
+Host variables: L_Name, L_Description.
+Delete:
+DELETE FROM location WHERE L_ID = #.
+Host presses specific delete button when sends L_ID as variable to the statement.
+
+Campaign: 
+POST: https://(path)/sql
+Display: 
+CREATE VIEW all_campaigns AS SELECT * FROM campaign WHERE W_ID = #.
+Create campaign:
+INSERT INTO campaign (Story, C_Name, C_ID, W_ID) VALUES (“-”, “-”).
+Host variables (Story, C_Name)
+Update campaign: 
+UPDATE campaign SET () = “ “.
+Host Variables: Story, C_Name.
+Delete campaign:
+DELETE FROM campaign WHERE C_ID = #
+Host presses specific delete button when sends C_ID as variable to the statement.
+
+
+Scenarios 
+POST: https://(path)/sql
+Display:
+CREATE VIEW all_scenarios SELECT * FROM scenario WHERE UID = #.
+Host Variables = U_ID
+Create:
+INSERT INTO scenario (S_Name, S_ID, UserID, L_ID) VALUES (“-”, #, #, #).
+Host Variables: S_Name, L_ID
+Update:
+UPDATE scenario SET () = “ “.
+Host Variables: S_Name, S_ID, L_ID.
+Delete:
+DELETE FROM scenario WHERE S_ID = ?
+Host presses specific delete button when sends S_ID as variable to the statement.
+
+
+Exists in:
+Display:
+SELECT e_name FROM existsin RIGHT JOIN entity ON existsin.e_id = entity.e_id WHERE s_id = #
+hostVariables = S_ID
+Create existsin
+INSERT INTO existsin(e_id, s_id) VALUES( E_ID, S_ID)
+hostVariables = E_ID, S_ID
+Delete existsin
+DELETE FROM exists_in WHERE S_ID = # AND E_ID = #
+hostVariables = s_id, e_id
+
+Stats:
+Display
+SELECT * FROM stat WHERE s_id = ?
+hostVariables = s_id
+Create stat
+INSERT INTO stat(s_name, s_value, i_id, e_id) VALUES( ?, ?, ?, ?)
+Hostvariables = name, value, i_id, e_id
+Update stat
+UPDATE stat SET S_value = ?  WHERE  = ?, ?
+hostVariables = S_value, L_ID, U_ID
+Delete stat
+DELETE FROM stat WHERE S_ID = ?
+hostVariables = s_id
+
+Action/ability:
+POST https://(path)/sql
+Select action
+{“sql”:”SELECT * FROM action_ability WHERE A_Name = ?,
+“hostVariables”:[aId]}
+Create action
+{“sql”:”INSERT INTO action_ability VALUES( ?, ?)”,
+“hostVariables”:[name, value]}
+Delete action
+{“sql”:”DELETE FROM Action WHERE A_Name = ?”,
+“hostVariables”:[A_Name]”
+
+User:
+POST https://(path)/sql
+Select user
+{“sql”:”SELECT u_id, nickname, email FROM  WHERE u_id = ?,
+“hostVariables”:[u_id]}
+Update User
+{“sql”:”UPDATE user SET ? = ?  WHERE  = ?, ?”
+“hostVariables”:[change, changedValue, U_ID]}
+ Create User
+{“sql”:”INSERT INTO user VALUES( ?, ?, ?)”,
+“hostVariables”:[nickname, email, password]}
+Delete User
+{“sql”:”DELETE FROM user WHERE U-ID = ?”,
+“hostVariables”:[U_ID]”
+
+Owns:
+Display:
+CREATE VIEW ownership SELECT * FROM owns
+
+Insert:
+INSERT INTO owns (E_ID, I_ID) VALUES (#, #)
+
+Delete:
+DELETE FROM owns WHERE E_ID/I_ID = #
+Host Variables: Host either deletes from entity or item.
