@@ -21,7 +21,6 @@ app.get("/", (req, res) => {
 })
 
 //World:
-
 //Display World: 
 app.get("/World", (req, res) => {
     const UserID = req.params.UserID;
@@ -36,7 +35,6 @@ app.get("/World", (req, res) => {
         }
     })
 })
-
 //Create World:
 app.post("/World", (req, res) => {
     const query = "INSERT INTO world(W_Name, W_ID, Lore, USER_ID) VALUES(?, ?, ?)"
@@ -55,7 +53,6 @@ app.post("/World", (req, res) => {
         }
     })
 })
-
 //Update World:
 app.put("/World/update/:id", (req, res) => {
     const W_Name = req.body.W_Name;
@@ -72,8 +69,6 @@ app.put("/World/update/:id", (req, res) => {
         }
     })
 })
-
-
 //Delete world:
 app.delete("/World/delete/:id", (req, res) => {
     const W_ID = req.params.id;
@@ -96,7 +91,7 @@ app.delete("/World/delete/:id", (req, res) => {
 
 app.get("/Entity", (req, res) => {
     const UserID = req.params.UserID;
-    const query = "SELECT * FROM world WHERE UserID = ?"
+    const query = "select entity.E_Name, entity.Type, stat.S_Name, stat.S_Value from entity INNER JOIN stat on entity.E_ID = stat.E_ID where entity.UserID = UserID"
 
 
     db.query(query, (err, result) => {
@@ -112,12 +107,13 @@ app.get("/Entity", (req, res) => {
 //INSERT INTO entity(E_Name, E_Details, Player_Notes, Type) Values(“-“, “-“, “-“, “-“);
 //Host variables: E_Name, E_Details, Player_Notes, Type.
 app.post("/Entity", (req, res) => {
-    const query = "INSERT INTO world(W_Name, W_ID, Lore, USER_ID) VALUES(?, ?, ?)"
+    const query = "INSERT INTO entity(E_Name, E_Details, Player_Notes, Type) Values(?, ?, ?, ?)"
 
     const VALUES = [
-        req.body.W_Name,
-        req.body.Lore,
-        req.params.UserID
+        req.body.E_Name,
+        req.body.E_Details,
+        req.body.Player_Notes,
+        req.body.Type
     ]
 
     db.query(query, [VALUES], (err, result) => {
@@ -133,10 +129,12 @@ app.post("/Entity", (req, res) => {
 //UPDATE entity SET() = “ “ where E_ID = #.
 //Host variables: host can choose to update any combination of  E_Name, E_Details, Player_Notes, or Type
 app.put("/Entity/update/:id", (req, res) => {
-    const W_Name = req.body.W_Name;
-    const Lore = req.body.Lore;
-    const W_ID = req.body.W_ID;
-    const query = "UPDATE world SET W_Name= ?, Lore = ? where W_ID = ?";
+    const EName = req.body.E_Name;
+    const EDetails = req.E_Details;
+    const Player_Notes = req.body.Player_Notes;
+    const Ty = req.body.Type;
+    const EID = req.body.E_ID;
+    const query = "UPDATE entity SET E_Name = EName, E_Details = EDetails, Player_Notes = PlayerNotes, Type = Ty where E_ID = EID";
 
 
     db.query(query, [itemID], (err, result) => {
@@ -154,7 +152,7 @@ app.put("/Entity/update/:id", (req, res) => {
 //Host presses delete button when sends E_ID as variable to the statement.
 app.delete("/Entity/delete/:id", (req, res) => {
     const W_ID = req.params.id;
-    const query = "DELETE FROM world WHERE W_ID = ?"
+    const query = "Delete FROM entity WHERE E_ID = ?"
 
     db.query(query, [itemID], (err, result) => {
         if (err) {
