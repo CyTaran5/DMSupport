@@ -549,11 +549,11 @@ app.delete("/existsin/delete/:id", (req, res) => {
 //SELECT * FROM stat WHERE s_id = ?
 //hostVariables = s_id
 app.get("/Stats", (req, res) => {
-    const UserID = req.params.UserID;
-    const query = "SELECT * FROM world WHERE UserID = ?"
+    const S_ID = req.params.S_ID;
+    const query = "SELECT * FROM stat WHERE S_ID = ?"
 
 
-    db.query(query, (err, result) => {
+    db.query(query, [S_ID], (err, result) => {
         if (err) {
             console.log(err)
         } else {
@@ -566,12 +566,13 @@ app.get("/Stats", (req, res) => {
 //INSERT INTO stat(s_name, s_value, i_id, e_id) VALUES( ?, ?, ?, ?)
 //Hostvariables = name, value, i_id, e_id
 app.post("/Stat", (req, res) => {
-    const query = "INSERT INTO world(W_Name, W_ID, Lore, USER_ID) VALUES(?, ?, ?)"
+    const query = "INSERT INTO stat(s_name, s_value, i_id, e_id) VALUES(?, ?, ?, ?)"
 
     const VALUES = [
-        req.body.W_Name,
-        req.body.Lore,
-        req.params.UserID
+        req.body.S_Name,
+        req.body.S_Value,
+        req.params.I_ID,
+        req.params.E_ID
     ]
 
     db.query(query, [VALUES], (err, result) => {
@@ -585,15 +586,18 @@ app.post("/Stat", (req, res) => {
 
 //Update Stat:
 //UPDATE stat SET S_value = ? WHERE = ?, ?
-//    hostVariables = S_value, L_ID, U_ID
+//    hostVariables = S_value, I_ID, E_ID
 app.put("/Stat/update/:id", (req, res) => {
-    const W_Name = req.body.W_Name;
-    const Lore = req.body.Lore;
-    const W_ID = req.body.W_ID;
-    const query = "UPDATE world SET W_Name= ?, Lore = ? where W_ID = ?";
+    
+    const query = "UPDATE stat SET S_value = ? WHERE I_ID = ? AND E_ID = ?";
 
+    const VALUES = [
+        req.body.S_Value,
+        req.params.I_ID,
+        req.params.E_ID
+    ]
 
-    db.query(query, [itemID], (err, result) => {
+    db.query(query, [VALUES], (err, result) => {
         if (err) {
             console.log(err)
         } else {
@@ -607,10 +611,10 @@ app.put("/Stat/update/:id", (req, res) => {
 //DELETE FROM stat WHERE S_ID = ?
 //    hostVariables = s_id
 app.delete("/Stat/delete/:id", (req, res) => {
-    const W_ID = req.params.id;
-    const query = "DELETE FROM world WHERE W_ID = ?"
+    const S_ID = req.params.S_ID;
+    const query = "DELETE FROM stat WHERE S_ID = ?"
 
-    db.query(query, [itemID], (err, result) => {
+    db.query(query, [S_ID], (err, result) => {
         if (err) {
             console.log(err)
         } else {
