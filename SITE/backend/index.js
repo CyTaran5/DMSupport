@@ -704,10 +704,10 @@ app.delete("/Action_ability/delete/:id", (req, res) => {
 //“hostVariables”: [u_id]}
 app.get("/User", (req, res) => {
     const UserID = req.params.UserID;
-    const query = "SELECT * FROM world WHERE UserID = ?"
+    const query = "SELECT u_id, nickname, email FROM  WHERE u_id = ?"
 
 
-    db.query(query, (err, result) => {
+    db.query(query, [UserID], (err, result) => {
         if (err) {
             console.log(err)
         } else {
@@ -720,12 +720,12 @@ app.get("/User", (req, res) => {
 //{“sql”:”INSERT INTO user VALUES( ?, ?, ?)”,
 //“hostVariables”: [nickname, email, password]}
 app.post("/User", (req, res) => {
-    const query = "INSERT INTO world(W_Name, W_ID, Lore, USER_ID) VALUES(?, ?, ?)"
+    const query = "INSERT INTO user (nickname, email, password) VALUES(?, ?, ?)"
 
     const VALUES = [
-        req.body.W_Name,
-        req.body.Lore,
-        req.params.UserID
+        req.body.nickname,
+        req.body.email,
+        req.params.password
     ]
 
     db.query(query, [VALUES], (err, result) => {
@@ -744,8 +744,14 @@ app.put("/User/update/:id", (req, res) => {
     const W_Name = req.body.W_Name;
     const Lore = req.body.Lore;
     const W_ID = req.body.W_ID;
-    const query = "UPDATE world SET W_Name= ?, Lore = ? where W_ID = ?";
+    const query = "UPDATE user SET Nickname = ?, email = ?, Password = ? WHERE U_ID = ?";
 
+    const VALUES = [
+        req.body.nickname,
+        req.body.email,
+        req.params.password,
+        req.params.U_ID
+    ]
 
     db.query(query, [itemID], (err, result) => {
         if (err) {
@@ -761,10 +767,10 @@ app.put("/User/update/:id", (req, res) => {
 //{“sql”:”DELETE FROM user WHERE U- ID = ?”,
 //“hostVariables”: [U_ID]”
 app.delete("/User/delete/:id", (req, res) => {
-    const W_ID = req.params.id;
-    const query = "DELETE FROM world WHERE W_ID = ?"
+    const U_ID = req.params.U_ID;
+    const query = "DELETE FROM user WHERE U_ID = ?"
 
-    db.query(query, [itemID], (err, result) => {
+    db.query(query, [U_ID], (err, result) => {
         if (err) {
             console.log(err)
         } else {
