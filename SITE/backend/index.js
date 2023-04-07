@@ -74,7 +74,7 @@ app.put("/World/update/:id", (req, res) => {
 })
 //Delete world:
 app.delete("/World/delete/:id", (req, res) => {
-    const W_ID = req.params.id;
+    const W_ID = req.params.W_ID;
     const query = "DELETE FROM world WHERE W_ID = ?"
 
     db.query(query, [W_ID], (err, result) => {
@@ -139,7 +139,7 @@ app.put("/Entity/update/:id", (req, res) => {
         req.body.E_Details,
         req.body.Player_Notes,
         req.body.Type,
-        req.params.UserID
+        req.params.E_ID
     ]
 
     db.query(query, [VALUES], (err, result) => {
@@ -156,7 +156,7 @@ app.put("/Entity/update/:id", (req, res) => {
 //Delete FROM entity WHERE E_ID = #.
 //Host presses delete button when sends E_ID as variable to the statement.
 app.delete("/Entity/delete/:id", (req, res) => {
-    const W_ID = req.params.id;
+    const W_ID = req.params.E_ID;
     const query = "Delete FROM entity WHERE E_ID = ?"
 
     db.query(query, [W_ID], (err, result) => {
@@ -236,7 +236,7 @@ app.put("/Items/update/:id", (req, res) => {
 //    DELETE FROM item WHERE I_ID = #
 //Host presses specific delete button when sends I_ID as variable to the statement.
 app.delete("/Items/delete/:id", (req, res) => {
-    const I_ID = req.params.id;
+    const I_ID = req.params.I_ID;
     const query = "DELETE FROM item WHERE I_ID = ?"
 
     db.query(query, [I_ID], (err, result) => {
@@ -255,10 +255,10 @@ app.delete("/Items/delete/:id", (req, res) => {
 //Host variables = UserID
 app.get("/Locations", (req, res) => {
     const UserID = req.params.UserID;
-    const query = "SELECT * FROM world WHERE UserID = ?"
+    const query = "SELECT * FROM location WHERE UserID = ?"
 
 
-    db.query(query, (err, result) => {
+    db.query(query, [UserID], (err, result) => {
         if (err) {
             console.log(err)
         } else {
@@ -271,12 +271,11 @@ app.get("/Locations", (req, res) => {
 //    INSERT INTO locations VALUES(L - Name, L_Description, L_ID) VALUES( “-”, “-”).
 //Host variables: L_Name, L_Description.
 app.post("/Locations", (req, res) => {
-    const query = "INSERT INTO world(W_Name, W_ID, Lore, USER_ID) VALUES(?, ?, ?)"
+    const query = "INSERT INTO locations VALUES(L_Name, L_Description) VALUES( ?, ?)"
 
     const VALUES = [
-        req.body.W_Name,
-        req.body.Lore,
-        req.params.UserID
+        req.body.L_Name,
+        req.body.L_Description
     ]
 
     db.query(query, [VALUES], (err, result) => {
@@ -292,13 +291,16 @@ app.post("/Locations", (req, res) => {
 //    UPDATE location SET() = “ “.
 //    Host variables: L_Name, L_Description.
 app.put("/Locations/update/:id", (req, res) => {
-    const W_Name = req.body.W_Name;
-    const Lore = req.body.Lore;
-    const W_ID = req.body.W_ID;
-    const query = "UPDATE world SET W_Name= ?, Lore = ? where W_ID = ?";
+    
+    const query = "UPDATE location SET L_Name= ?, L_Description = ? where L_ID = ?";
 
+    const VALUES = [
+        req.body.L_Name,
+        req.body.L_Description,
+        req.params.L_ID
+    ]
 
-    db.query(query, [itemID], (err, result) => {
+    db.query(query, [VALUES], (err, result) => {
         if (err) {
             console.log(err)
         } else {
@@ -312,10 +314,10 @@ app.put("/Locations/update/:id", (req, res) => {
 //    DELETE FROM location WHERE L_ID = #.
 //Host presses specific delete button when sends L_ID as variable to the statement.
 app.delete("/Locations/delete/:id", (req, res) => {
-    const W_ID = req.params.id;
-    const query = "DELETE FROM world WHERE W_ID = ?"
+    const L_ID = req.params.L_ID;
+    const query = "DELETE FROM location WHERE L_ID = ?"
 
-    db.query(query, [itemID], (err, result) => {
+    db.query(query, [L_ID], (err, result) => {
         if (err) {
             console.log(err)
         } else {
