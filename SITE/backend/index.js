@@ -411,10 +411,10 @@ app.delete("/Campaign/delete/:id", (req, res) => {
 //Host Variables = U_ID
 app.get("/Scenarios", (req, res) => {
     const UserID = req.params.UserID;
-    const query = "SELECT * FROM world WHERE UserID = ?"
+    const query = "SELECT * FROM scenario WHERE UserID = ?"
 
 
-    db.query(query, (err, result) => {
+    db.query(query, [UserID], (err, result) => {
         if (err) {
             console.log(err)
         } else {
@@ -427,12 +427,12 @@ app.get("/Scenarios", (req, res) => {
 //INSERT INTO scenario(S_Name, S_ID, UserID, L_ID) VALUES(“-”, #, #, #).
 //Host Variables: S_Name, L_ID
 app.post("/Scenarios", (req, res) => {
-    const query = "INSERT INTO world(W_Name, W_ID, Lore, USER_ID) VALUES(?, ?, ?)"
+    const query = "INSERT INTO scenario(S_Name, UserID, L_ID) VALUES(?, ?, ?)"
 
     const VALUES = [
-        req.body.W_Name,
-        req.body.Lore,
-        req.params.UserID
+        req.body.S_Name,
+        req.params.UserID,
+        req.params.L_ID
     ]
 
     db.query(query, [VALUES], (err, result) => {
@@ -448,13 +448,17 @@ app.post("/Scenarios", (req, res) => {
 //UPDATE scenario SET() = “ “.
 //Host Variables: S_Name, S_ID, L_ID.
 app.put("/Scenarios/update/:id", (req, res) => {
-    const W_Name = req.body.W_Name;
-    const Lore = req.body.Lore;
-    const W_ID = req.body.W_ID;
-    const query = "UPDATE world SET W_Name= ?, Lore = ? where W_ID = ?";
 
+    const query = "UPDATE scenario SET S_Name, UserID, L_ID where S_ID = ?";
 
-    db.query(query, [itemID], (err, result) => {
+    const VALUES = [
+        req.body.S_Name,
+        req.params.UserID,
+        req.params.L_ID,
+        req.params.S_ID
+    ]
+
+    db.query(query, [VALUES], (err, result) => {
         if (err) {
             console.log(err)
         } else {
@@ -468,10 +472,10 @@ app.put("/Scenarios/update/:id", (req, res) => {
 //DELETE FROM scenario WHERE S_ID = ?
 //Host presses specific delete button when sends S_ID as variable to the statement.
 app.delete("/Scenarios/delete/:id", (req, res) => {
-    const W_ID = req.params.id;
-    const query = "DELETE FROM world WHERE W_ID = ?"
+    const S_ID = req.params.S_ID;
+    const query = "DELETE FROM scenario WHERE S_ID = ?"
 
-    db.query(query, [itemID], (err, result) => {
+    db.query(query, [S_ID], (err, result) => {
         if (err) {
             console.log(err)
         } else {
