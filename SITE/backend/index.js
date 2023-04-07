@@ -785,7 +785,7 @@ app.delete("/User/delete/:id", (req, res) => {
 //    CREATE VIEW ownership SELECT * FROM owns
 app.get("/Owns", (req, res) => {
     const UserID = req.params.UserID;
-    const query = "SELECT * FROM world WHERE UserID = ?"
+    const query = "SELECT * FROM owns"
 
 
     db.query(query, (err, result) => {
@@ -800,12 +800,11 @@ app.get("/Owns", (req, res) => {
 //Create Owns:
 //    INSERT INTO owns(E_ID, I_ID) VALUES(#, #)
 app.post("/Owns", (req, res) => {
-    const query = "INSERT INTO world(W_Name, W_ID, Lore, USER_ID) VALUES(?, ?, ?)"
+    const query = "INSERT INTO owns(E_ID, I_ID) VALUES(?, ?, ?)"
 
     const VALUES = [
-        req.body.W_Name,
-        req.body.Lore,
-        req.params.UserID
+        req.params.E_ID,
+        req.params.I_ID
     ]
 
     db.query(query, [VALUES], (err, result) => {
@@ -822,7 +821,7 @@ app.put("/Owns/update/:id", (req, res) => {
     const W_Name = req.body.W_Name;
     const Lore = req.body.Lore;
     const W_ID = req.body.W_ID;
-    const query = "UPDATE world SET W_Name= ?, Lore = ? where W_ID = ?";
+    const query = "";
 
 
     db.query(query, [itemID], (err, result) => {
@@ -840,9 +839,14 @@ app.put("/Owns/update/:id", (req, res) => {
 //Host Variables: Host either deletes from entity or item.
 app.delete("/Owns/delete/:id", (req, res) => {
     const W_ID = req.params.id;
-    const query = "DELETE FROM world WHERE W_ID = ?"
+    const query = "DELETE FROM owns WHERE ? = ?"
 
-    db.query(query, [itemID], (err, result) => {
+    const VALUES = [
+        req.body.target,
+        req.params.value
+    ]
+
+    db.query(query, [VALUES], (err, result) => {
         if (err) {
             console.log(err)
         } else {
