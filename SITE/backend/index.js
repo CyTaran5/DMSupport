@@ -490,11 +490,11 @@ app.delete("/Scenarios/delete/:id", (req, res) => {
 //    SELECT e_name FROM existsin RIGHT JOIN entity ON existsin.e_id = entity.e_id WHERE s_id = #
 //hostVariables = S_ID
 app.get("/existsin", (req, res) => {
-    const UserID = req.params.UserID;
-    const query = "SELECT * FROM world WHERE UserID = ?"
+    const S_ID = req.params.S_ID;
+    const query = "SELECT e_name FROM existsin RIGHT JOIN entity ON existsin.E_ID = entity.E_ID WHERE S_ID = ?"
 
 
-    db.query(query, (err, result) => {
+    db.query(query, [S_ID], (err, result) => {
         if (err) {
             console.log(err)
         } else {
@@ -507,12 +507,11 @@ app.get("/existsin", (req, res) => {
 //INSERT INTO existsin(e_id, s_id) VALUES(E_ID, S_ID)
 //hostVariables = E_ID, S_ID
 app.post("/existsin", (req, res) => {
-    const query = "INSERT INTO world(W_Name, W_ID, Lore, USER_ID) VALUES(?, ?, ?)"
+    const query = "INSERT INTO existsin(E_ID, S_ID) VALUES(?, ?)"
 
     const VALUES = [
-        req.body.W_Name,
-        req.body.Lore,
-        req.params.UserID
+        req.params.E_ID,
+        req.params.S_ID
     ]
 
     db.query(query, [VALUES], (err, result) => {
@@ -528,8 +527,13 @@ app.post("/existsin", (req, res) => {
 //DELETE FROM exists_in WHERE S_ID = # AND E_ID = #
 //hostVariables = s_id, e_id
 app.delete("/existsin/delete/:id", (req, res) => {
-    const W_ID = req.params.id;
-    const query = "DELETE FROM world WHERE W_ID = ?"
+
+    const query = "DELETE FROM exists_in WHERE S_ID = ? AND E_ID = ?"
+
+    const VALUES = [
+        req.params.S_ID,
+        req.params.E_ID
+    ]
 
     db.query(query, [itemID], (err, result) => {
         if (err) {
