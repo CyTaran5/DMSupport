@@ -331,11 +331,11 @@ app.delete("/Locations/delete/:id", (req, res) => {
 //Display Campaign:
 //    CREATE VIEW all_campaigns AS SELECT * FROM campaign WHERE W_ID = #.
 app.get("/Campaign", (req, res) => {
-    const UserID = req.params.UserID;
-    const query = "SELECT * FROM world WHERE UserID = ?"
+    const W_ID = req.params.W_ID;
+    const query = "SELECT * FROM campaign WHERE W_ID = ?"
 
 
-    db.query(query, (err, result) => {
+    db.query(query, [W_ID], (err, result) => {
         if (err) {
             console.log(err)
         } else {
@@ -345,15 +345,15 @@ app.get("/Campaign", (req, res) => {
 })
 
 //Create Campaign:
-//    INSERT INTO campaign(Story, C_Name, C_ID, W_ID) VALUES(“-”, “-”).
+//    INSERT INTO campaign(Story, C_Name, W_ID) VALUES(“-”, “-”).
 //Host variables(Story, C_Name)
 app.post("/Campaign", (req, res) => {
-    const query = "INSERT INTO world(W_Name, W_ID, Lore, USER_ID) VALUES(?, ?, ?)"
+    const query = "INSERT INTO campaign(Story, C_Name, W_ID) VALUES(?, ?, ?)"
 
     const VALUES = [
-        req.body.W_Name,
-        req.body.Lore,
-        req.params.UserID
+        req.body.Story,
+        req.body.C_Name,
+        req.params.W_ID
     ]
 
     db.query(query, [VALUES], (err, result) => {
@@ -369,13 +369,16 @@ app.post("/Campaign", (req, res) => {
 //    UPDATE campaign SET() = “ “.
 //    Host Variables: Story, C_Name.
 app.put("/Campaign/update/:id", (req, res) => {
-    const W_Name = req.body.W_Name;
-    const Lore = req.body.Lore;
-    const W_ID = req.body.W_ID;
-    const query = "UPDATE world SET W_Name= ?, Lore = ? where W_ID = ?";
+    
+    const query = "UPDATE campaign SET Story = ?, C_Name = ? where C_ID = ?";
 
+    const VALUES = [
+        req.body.Story,
+        req.body.C_Name,
+        req.params.C_ID
+    ]
 
-    db.query(query, [itemID], (err, result) => {
+    db.query(query, [VALUES], (err, result) => {
         if (err) {
             console.log(err)
         } else {
@@ -389,10 +392,10 @@ app.put("/Campaign/update/:id", (req, res) => {
 //    DELETE FROM campaign WHERE C_ID = #
 //Host presses specific delete button when sends C_ID as variable to the statement.
 app.delete("/Campaign/delete/:id", (req, res) => {
-    const W_ID = req.params.id;
-    const query = "DELETE FROM world WHERE W_ID = ?"
+    const C_ID = req.params.C_ID;
+    const query = "DELETE FROM world WHERE C_ID = ?"
 
-    db.query(query, [itemID], (err, result) => {
+    db.query(query, [C_ID], (err, result) => {
         if (err) {
             console.log(err)
         } else {
