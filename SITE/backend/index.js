@@ -630,11 +630,11 @@ app.delete("/Stat/delete/:id", (req, res) => {
 //{“sql”:”SELECT * FROM action_ability WHERE A_Name = ?,
 //“hostVariables”: [aId]}
 app.get("/Action_ability", (req, res) => {
-    const UserID = req.params.UserID;
-    const query = "SELECT * FROM world WHERE UserID = ?"
+    const A_Name = req.body.A_Name;
+    const query = "SELECT * FROM action_ability WHERE A_Name = ?"
 
 
-    db.query(query, (err, result) => {
+    db.query(query, [A_Name], (err, result) => {
         if (err) {
             console.log(err)
         } else {
@@ -647,12 +647,11 @@ app.get("/Action_ability", (req, res) => {
 //{“sql”:”INSERT INTO action_ability VALUES( ?, ?)”,
 //“hostVariables”: [name, value]}
 app.post("/Action_ability", (req, res) => {
-    const query = "INSERT INTO world(W_Name, W_ID, Lore, USER_ID) VALUES(?, ?, ?)"
+    const query = "INSERT INTO action_ability(A_Name, A_Value) VALUES(?, ?)"
 
     const VALUES = [
-        req.body.W_Name,
-        req.body.Lore,
-        req.params.UserID
+        req.body.A_Name,
+        req.body.A_Value
     ]
 
     db.query(query, [VALUES], (err, result) => {
@@ -669,7 +668,7 @@ app.put("/Action_ability/update/:id", (req, res) => {
     const W_Name = req.body.W_Name;
     const Lore = req.body.Lore;
     const W_ID = req.body.W_ID;
-    const query = "UPDATE world SET W_Name= ?, Lore = ? where W_ID = ?";
+    const query = "";
 
 
     db.query(query, [itemID], (err, result) => {
@@ -686,10 +685,10 @@ app.put("/Action_ability/update/:id", (req, res) => {
 //{“sql”:”DELETE FROM Action WHERE A_Name = ?”,
 //“hostVariables”: [A_Name]”
 app.delete("/Action_ability/delete/:id", (req, res) => {
-    const W_ID = req.params.id;
-    const query = "DELETE FROM world WHERE W_ID = ?"
+    const A_Name = req.body.A_Name;
+    const query = "DELETE FROM Action WHERE A_Name = ?"
 
-    db.query(query, [itemID], (err, result) => {
+    db.query(query, [A_Name], (err, result) => {
         if (err) {
             console.log(err)
         } else {
