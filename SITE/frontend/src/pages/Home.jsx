@@ -3,13 +3,14 @@ import { useState } from "react";
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 import ListItem from '../components/ListItem';
+import TableSelect from '../components/TableSelect';
 import { 
     Box, 
     Input, 
     Flex
 } from "@chakra-ui/react";
 
-const Todos = () => {
+const Home = () => {
     //states- one for each backend method
     const [todos, setTodos] = React.useState([]); //For the get method
     const [newTodo, setNewTodo] = useState({ //For the post method
@@ -49,7 +50,8 @@ const Todos = () => {
     return (
         <Box bg="blackAlpha.900" h="100%" minH="100vh" pb={5}>
             <Navbar />
-                <form onSubmit={handleClick}>
+            <TableSelect /> 
+                {/* <form onSubmit={handleClick}>
                     <Input 
                         type="text" 
                         name="itemName"
@@ -60,7 +62,7 @@ const Todos = () => {
                         onChange={handleChange}
 
                     />
-                </form>
+                </form>  */}
             <Flex direction="column" align="center">
                 {todos.map((todo) => (
                     <ListItem todo={todo} />
@@ -68,6 +70,7 @@ const Todos = () => {
             </Flex>
         </Box>
     );
+
 }
 
-export default Todos;
+export default Home;

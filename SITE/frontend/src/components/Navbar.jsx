@@ -22,7 +22,7 @@ const Navbar = () => {
     <Flex as="nav" align="center" justify="space-between" wrap="wrap" padding="1rem" bg="blue.500" color="white">
       <Flex align="center" mr={5}>
         <Heading as="h1" size="lg" letterSpacing={'-.1rem'}>
-          Todo List
+          DMSUPPORT
         </Heading>
       </Flex>
 
@@ -41,10 +41,9 @@ const Navbar = () => {
         </svg>
       </Box>
 
-      <Box display={{ base: isOpen ? 'block' : 'none', md: 'flex' }} width={{ base: 'full', md: 'auto' }} alignItems="center">
+      <Box display={{ base: isOpen ? 'block' : 'none', md: 'flex' }} width={{ base: 'full', md: 'auto' }} alignItems="right">
         <Menu>
           <MenuButton
-            as={Button}
             variant="ghost"
             color="white"
             rightIcon={<svg width="5" height="5" viewBox="0 0 5 5" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>}
@@ -52,8 +51,10 @@ const Navbar = () => {
             Menu
           </MenuButton>
           <MenuList bg="blackAlpha.500">
-            <MenuItem bg="blackAlpha.500"><Link to="/">My Todo List</Link></MenuItem>
-            <MenuItem bg="blackAlpha.500"><Link to="/surprise">Surprise</Link></MenuItem>
+            <MenuItem bg="blackAlpha.500"><Link to="/">Home</Link></MenuItem>
+            {/* <MenuItem bg="blackAlpha.500"><Link to="/surprise">Surprise</Link></MenuItem> */}
+            <MenuItem bg="blackAlpha.500"><Link to="/Account_Details">Account Details</Link></MenuItem>
+
             <MenuDivider />
             <MenuItem bg="blackAlpha.500"> Fake Logout</MenuItem>
           </MenuList>
