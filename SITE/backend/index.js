@@ -23,11 +23,11 @@ app.get("/", (req, res) => {
 //World:
 //Display World: 
 app.get("/World", (req, res) => {
-    const UserID = req.params.UserID;
-    const query = "SELECT * FROM world WHERE UserID = ?"
+    const U_ID = req.params.U_ID;
+    const query = "SELECT * FROM world WHERE U_ID = ?"
 
 
-    db.query(query, [UserID], (err, result) => {
+    db.query(query, [U_ID], (err, result) => {
         if (err) {
             console.log(err)
         } else {
@@ -42,7 +42,7 @@ app.post("/World", (req, res) => {
     const VALUES = [
         req.body.W_Name,
         req.body.Lore,
-        req.params.UserID
+        req.params.U_ID
     ]
 
     db.query(query, [VALUES], (err, result) => {
@@ -90,13 +90,13 @@ app.delete("/World/delete/:id", (req, res) => {
 //Entity:
 
 //Display Entity:
-//create view all_entities as select entity.E_Name, entity.Type, stat.S_Name, stat.S_Value from entity INNER JOIN stat on entity.E_ID = stat.E_ID where entity.UserID = #
+//create view all_entities as select entity.E_Name, entity.Type, stat.S_Name, stat.S_Value from entity INNER JOIN stat on entity.E_ID = stat.E_ID where entity.U_ID = #
 app.get("/Entity", (req, res) => {
-    const UserID = req.params.UserID;
-    const query = "select entity.E_Name, entity.Type, stat.S_Name, stat.S_Value from entity INNER JOIN stat on entity.E_ID = stat.E_ID where entity.UserID = ?"
+    const U_ID = req.params.U_ID;
+    const query = "select entity.E_Name, entity.Type, stat.S_Name, stat.S_Value from entity INNER JOIN stat on entity.E_ID = stat.E_ID where entity.U_ID = ?"
 
 
-    db.query(query, [UserID], (err, result) => {
+    db.query(query, [U_ID], (err, result) => {
         if (err) {
             console.log(err)
         } else {
@@ -171,12 +171,12 @@ app.delete("/Entity/delete/:id", (req, res) => {
 
 //    Items:
 //Display Items:
-//CREATE VIEW all_items AS SELECT item.I_Name, stat.S_Name, stat.S_Value FROM item INNER JOIN stat ON item.I_ID = stat.I_ID WHERE item.UserID = #
+//CREATE VIEW all_items AS SELECT item.I_Name, stat.S_Name, stat.S_Value FROM item INNER JOIN stat ON item.I_ID = stat.I_ID WHERE item.U_ID = #
 app.get("/Items", (req, res) => {
-    const UserID = req.params.UserID;
-    const query = "SELECT item.I_Name, stat.S_Name, stat.S_Value FROM item INNER JOIN stat ON item.I_ID = stat.I_ID WHERE item.UserID = ?"
+    const U_ID = req.params.U_ID;
+    const query = "SELECT item.I_Name, stat.S_Name, stat.S_Value FROM item INNER JOIN stat ON item.I_ID = stat.I_ID WHERE item.U_ID = ?"
 
-    db.query(query, [UserID], (err, result) => {
+    db.query(query, [U_ID], (err, result) => {
         if (err) {
             console.log(err)
         } else {
@@ -251,14 +251,14 @@ app.delete("/Items/delete/:id", (req, res) => {
 
 //    Locations:
 //Display Locations:
-//    CREATE VIEW all_locations AS SELECT * FROM location WHERE UserID = #.
-//Host variables = UserID
+//    CREATE VIEW all_locations AS SELECT * FROM location WHERE U_ID = #.
+//Host variables = U_ID
 app.get("/Locations", (req, res) => {
-    const UserID = req.params.UserID;
-    const query = "SELECT * FROM location WHERE UserID = ?"
+    const U_ID = req.params.U_ID;
+    const query = "SELECT * FROM location WHERE U_ID = ?"
 
 
-    db.query(query, [UserID], (err, result) => {
+    db.query(query, [U_ID], (err, result) => {
         if (err) {
             console.log(err)
         } else {
@@ -410,11 +410,11 @@ app.delete("/Campaign/delete/:id", (req, res) => {
 //CREATE VIEW all_scenarios SELECT * FROM scenario WHERE UID = #.
 //Host Variables = U_ID
 app.get("/Scenarios", (req, res) => {
-    const UserID = req.params.UserID;
-    const query = "SELECT * FROM scenario WHERE UserID = ?"
+    const U_ID = req.params.U_ID;
+    const query = "SELECT * FROM scenario WHERE U_ID = ?"
 
 
-    db.query(query, [UserID], (err, result) => {
+    db.query(query, [U_ID], (err, result) => {
         if (err) {
             console.log(err)
         } else {
@@ -424,14 +424,14 @@ app.get("/Scenarios", (req, res) => {
 })
 
 //Create Scenarios:
-//INSERT INTO scenario(S_Name, S_ID, UserID, L_ID) VALUES(“-”, #, #, #).
+//INSERT INTO scenario(S_Name, S_ID, U_ID, L_ID) VALUES(“-”, #, #, #).
 //Host Variables: S_Name, L_ID
 app.post("/Scenarios", (req, res) => {
-    const query = "INSERT INTO scenario(S_Name, UserID, L_ID) VALUES(?, ?, ?)"
+    const query = "INSERT INTO scenario(S_Name, U_ID, L_ID) VALUES(?, ?, ?)"
 
     const VALUES = [
         req.body.S_Name,
-        req.params.UserID,
+        req.params.U_ID,
         req.params.L_ID
     ]
 
@@ -449,11 +449,11 @@ app.post("/Scenarios", (req, res) => {
 //Host Variables: S_Name, S_ID, L_ID.
 app.put("/Scenarios/update/:id", (req, res) => {
 
-    const query = "UPDATE scenario SET S_Name, UserID, L_ID where S_ID = ?";
+    const query = "UPDATE scenario SET S_Name, U_ID, L_ID where S_ID = ?";
 
     const VALUES = [
         req.body.S_Name,
-        req.params.UserID,
+        req.params.U_ID,
         req.params.L_ID,
         req.params.S_ID
     ]
@@ -703,11 +703,11 @@ app.delete("/Action_ability/delete/:id", (req, res) => {
 //{“sql”:”SELECT u_id, nickname, email FROM  WHERE u_id = ?,
 //“hostVariables”: [u_id]}
 app.get("/User", (req, res) => {
-    const UserID = req.params.UserID;
+    const U_ID = req.params.U_ID;
     const query = "SELECT u_id, nickname, email FROM  WHERE u_id = ?"
 
 
-    db.query(query, [UserID], (err, result) => {
+    db.query(query, [U_ID], (err, result) => {
         if (err) {
             console.log(err)
         } else {
@@ -784,7 +784,7 @@ app.delete("/User/delete/:id", (req, res) => {
 //Display Owns:
 //    CREATE VIEW ownership SELECT * FROM owns
 app.get("/Owns", (req, res) => {
-    const UserID = req.params.UserID;
+    const U_ID = req.params.U_ID;
     const query = "SELECT * FROM owns"
 
 
