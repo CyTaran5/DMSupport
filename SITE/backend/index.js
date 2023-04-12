@@ -5,10 +5,10 @@ import cors from "cors"
 const app = express()
 
 const db = mysql.createConnection({
-    host: "localhost:3306", //the host for you database
+    host: "127.0.0.1", //the host for you database
     user: "root", //the username for your database
     password: "John1234", //the password for your database
-    database: "355 Lab" //the name of your database (database itself, not the schema)
+    database: "dmsupport" //the name of your database (database itself, not the schema)
 })
 
 //dependencies
@@ -17,17 +17,17 @@ app.use(cors())
 
 //gets the homepage, useful for testing
 app.get("/", (req, res) => {
-    res.json({ message: "Hello World" })
+    res.json({ message: "Backend is up." })
 })
+
+//-----------------------------------------------------------------------------------------------------------------------
 
 //World:
 //Display World: 
 app.get("/World", (req, res) => {
-    const U_ID = req.params.U_ID;
-    const query = "SELECT * FROM world WHERE U_ID = ?"
+    const query = "SELECT * FROM world"
 
-
-    db.query(query, [U_ID], (err, result) => {
+    db.query(query, (err, result) => {
         if (err) {
             console.log(err)
         } else {
@@ -35,17 +35,13 @@ app.get("/World", (req, res) => {
         }
     })
 })
+
 //Create World:
 app.post("/World", (req, res) => {
-    const query = "INSERT INTO world(W_Name, W_ID, Lore, USER_ID) VALUES(?, ?, ?)"
+    const {W_Name, Lore, UserID} = req.body;
+    const query = "INSERT INTO world(W_Name, Lore, UserID) VALUES (?, ?, ?)"
 
-    const VALUES = [
-        req.body.W_Name,
-        req.body.Lore,
-        req.params.U_ID
-    ]
-
-    db.query(query, [VALUES], (err, result) => {
+    db.query(query, [W_Name, Lore, UserID], (err, result) => {
         if (err) {
             console.log(err)
         } else {
@@ -53,18 +49,14 @@ app.post("/World", (req, res) => {
         }
     })
 })
+
 //Update World:
-app.put("/World/update/:id", (req, res) => {
+app.put("/World/update", (req, res) => {
     
-    const query = "UPDATE world SET W_Name= ?, Lore = ? where W_ID = ?";
+    const {W_Name, Lore, W_ID} = req.body;
+    const query = "UPDATE world SET W_Name = ?, Lore = ? WHERE W_ID = ?";
 
-    const VALUES = [
-        req.body.W_Name,
-        req.body.Lore,
-        req.params.W_ID
-    ]
-
-    db.query(query, [VALUES], (err, result) => {
+    db.query(query, [W_Name, Lore, W_ID], (err, result) => {
         if (err) {
             console.log(err)
         } else {
@@ -72,9 +64,10 @@ app.put("/World/update/:id", (req, res) => {
         }
     })
 })
+
 //Delete world:
-app.delete("/World/delete/:id", (req, res) => {
-    const W_ID = req.params.W_ID;
+app.delete("/World/delete", (req, res) => {
+    const {W_ID} = req.body;
     const query = "DELETE FROM world WHERE W_ID = ?"
 
     db.query(query, [W_ID], (err, result) => {
@@ -87,6 +80,7 @@ app.delete("/World/delete/:id", (req, res) => {
 })
 
 
+//--------------------------------------------------------------------------------------------
 //Entity:
 
 //Display Entity:
@@ -106,7 +100,7 @@ app.get("/Entity", (req, res) => {
 })
 
 //Create Entity:
-//INSERT INTO entity(E_Name, E_Details, Player_Notes, Type) Values(“-“, “-“, “-“, “-“);
+//INSERT INTO entity(E_Name, E_Details, Player_Notes, Type) Values(ï¿½-ï¿½, ï¿½-ï¿½, ï¿½-ï¿½, ï¿½-ï¿½);
 //Host variables: E_Name, E_Details, Player_Notes, Type.
 app.post("/Entity", (req, res) => {
     const query = "INSERT INTO entity(E_Name, E_Details, Player_Notes, Type) Values(?, ?, ?, ?)"
@@ -128,7 +122,7 @@ app.post("/Entity", (req, res) => {
 })
 
 //Update Entity:
-//UPDATE entity SET() = “ “ where E_ID = #.
+//UPDATE entity SET() = ï¿½ ï¿½ where E_ID = #.
 //Host variables: host can choose to update any combination of  E_Name, E_Details, Player_Notes, or Type
 app.put("/Entity/update/:id", (req, res) => {
     
@@ -186,7 +180,7 @@ app.get("/Items", (req, res) => {
 })
 
 //Create Items:
-//INSERT INTO item(I_Name, I_Details, Item_Notes, I_ID, User_ID)  Values("-", "-", “-", #, #).
+//INSERT INTO item(I_Name, I_Details, Item_Notes, I_ID, User_ID)  Values("-", "-", ï¿½-", #, #).
 //Host variables: I_Name, I_Details, Item_Notes..
 app.post("/Items", (req, res) => {
     const query = "INSERT INTO item(I_Name, I_Details, Item_Notes, I_ID, User_ID)  Values(?, ?, ?, ?, ?))"
@@ -209,7 +203,7 @@ app.post("/Items", (req, res) => {
 })
 
 //Update Items:
-//    UPDATE item SET() = “ “.where I_ID = #.
+//    UPDATE item SET() = ï¿½ ï¿½.where I_ID = #.
 //Host variables: I_Name, I_Details, Item_Notes.
 app.put("/Items/update/:id", (req, res) => {
 
@@ -268,7 +262,7 @@ app.get("/Locations", (req, res) => {
 })
 
 //Create Locations:
-//    INSERT INTO locations VALUES(L - Name, L_Description, L_ID) VALUES( “-”, “-”).
+//    INSERT INTO locations VALUES(L - Name, L_Description, L_ID) VALUES( ï¿½-ï¿½, ï¿½-ï¿½).
 //Host variables: L_Name, L_Description.
 app.post("/Locations", (req, res) => {
     const query = "INSERT INTO locations VALUES(L_Name, L_Description) VALUES( ?, ?)"
@@ -288,7 +282,7 @@ app.post("/Locations", (req, res) => {
 })
 
 //Update Locations:
-//    UPDATE location SET() = “ “.
+//    UPDATE location SET() = ï¿½ ï¿½.
 //    Host variables: L_Name, L_Description.
 app.put("/Locations/update/:id", (req, res) => {
     
@@ -345,7 +339,7 @@ app.get("/Campaign", (req, res) => {
 })
 
 //Create Campaign:
-//    INSERT INTO campaign(Story, C_Name, W_ID) VALUES(“-”, “-”).
+//    INSERT INTO campaign(Story, C_Name, W_ID) VALUES(ï¿½-ï¿½, ï¿½-ï¿½).
 //Host variables(Story, C_Name)
 app.post("/Campaign", (req, res) => {
     const query = "INSERT INTO campaign(Story, C_Name, W_ID) VALUES(?, ?, ?)"
@@ -366,7 +360,7 @@ app.post("/Campaign", (req, res) => {
 })
 
 //Update Campaign:
-//    UPDATE campaign SET() = “ “.
+//    UPDATE campaign SET() = ï¿½ ï¿½.
 //    Host Variables: Story, C_Name.
 app.put("/Campaign/update/:id", (req, res) => {
     
@@ -424,7 +418,7 @@ app.get("/Scenarios", (req, res) => {
 })
 
 //Create Scenarios:
-//INSERT INTO scenario(S_Name, S_ID, U_ID, L_ID) VALUES(“-”, #, #, #).
+//INSERT INTO scenario(S_Name, S_ID, U_ID, L_ID) VALUES(ï¿½-ï¿½, #, #, #).
 //Host Variables: S_Name, L_ID
 app.post("/Scenarios", (req, res) => {
     const query = "INSERT INTO scenario(S_Name, U_ID, L_ID) VALUES(?, ?, ?)"
@@ -445,7 +439,7 @@ app.post("/Scenarios", (req, res) => {
 })
 
 //Update Scenarios:
-//UPDATE scenario SET() = “ “.
+//UPDATE scenario SET() = ï¿½ ï¿½.
 //Host Variables: S_Name, S_ID, L_ID.
 app.put("/Scenarios/update/:id", (req, res) => {
 
@@ -627,8 +621,8 @@ app.delete("/Stat/delete/:id", (req, res) => {
 //Action_ability:
 //Display Action_ability:
 //    Select action
-//{“sql”:”SELECT * FROM action_ability WHERE A_Name = ?,
-//“hostVariables”: [aId]}
+//{ï¿½sqlï¿½:ï¿½SELECT * FROM action_ability WHERE A_Name = ?,
+//ï¿½hostVariablesï¿½: [aId]}
 app.get("/Action_ability", (req, res) => {
     const A_Name = req.body.A_Name;
     const query = "SELECT * FROM action_ability WHERE A_Name = ?"
@@ -644,8 +638,8 @@ app.get("/Action_ability", (req, res) => {
 })
 
 //Create Action_ability:
-//{“sql”:”INSERT INTO action_ability VALUES( ?, ?)”,
-//“hostVariables”: [name, value]}
+//{ï¿½sqlï¿½:ï¿½INSERT INTO action_ability VALUES( ?, ?)ï¿½,
+//ï¿½hostVariablesï¿½: [name, value]}
 app.post("/Action_ability", (req, res) => {
     const query = "INSERT INTO action_ability(A_Name, A_Value) VALUES(?, ?)"
 
@@ -682,8 +676,8 @@ app.put("/Action_ability/update/:id", (req, res) => {
 
 
 //Delete Action_ability:
-//{“sql”:”DELETE FROM Action WHERE A_Name = ?”,
-//“hostVariables”: [A_Name]”
+//{ï¿½sqlï¿½:ï¿½DELETE FROM Action WHERE A_Name = ?ï¿½,
+//ï¿½hostVariablesï¿½: [A_Name]ï¿½
 app.delete("/Action_ability/delete/:id", (req, res) => {
     const A_Name = req.body.A_Name;
     const query = "DELETE FROM Action WHERE A_Name = ?"
@@ -700,8 +694,8 @@ app.delete("/Action_ability/delete/:id", (req, res) => {
 
 //        User:
 //Display User:
-//{“sql”:”SELECT u_id, nickname, email FROM  WHERE u_id = ?,
-//“hostVariables”: [u_id]}
+//{ï¿½sqlï¿½:ï¿½SELECT u_id, nickname, email FROM  WHERE u_id = ?,
+//ï¿½hostVariablesï¿½: [u_id]}
 app.get("/User", (req, res) => {
     const U_ID = req.params.U_ID;
     const query = "SELECT u_id, nickname, email FROM  WHERE u_id = ?"
@@ -717,8 +711,8 @@ app.get("/User", (req, res) => {
 })
 
 //Create User:
-//{“sql”:”INSERT INTO user VALUES( ?, ?, ?)”,
-//“hostVariables”: [nickname, email, password]}
+//{ï¿½sqlï¿½:ï¿½INSERT INTO user VALUES( ?, ?, ?)ï¿½,
+//ï¿½hostVariablesï¿½: [nickname, email, password]}
 app.post("/User", (req, res) => {
     const query = "INSERT INTO user (nickname, email, password) VALUES(?, ?, ?)"
 
@@ -738,8 +732,8 @@ app.post("/User", (req, res) => {
 })
 
 //Update User:
-//{“sql”:”UPDATE user SET?= ? WHERE = ?, ?”
-//“hostVariables”: [change, changedValue, U_ID]}
+//{ï¿½sqlï¿½:ï¿½UPDATE user SET?= ? WHERE = ?, ?ï¿½
+//ï¿½hostVariablesï¿½: [change, changedValue, U_ID]}
 app.put("/User/update/:id", (req, res) => {
     const W_Name = req.body.W_Name;
     const Lore = req.body.Lore;
@@ -764,8 +758,8 @@ app.put("/User/update/:id", (req, res) => {
 
 
 //Delete User:
-//{“sql”:”DELETE FROM user WHERE U- ID = ?”,
-//“hostVariables”: [U_ID]”
+//{ï¿½sqlï¿½:ï¿½DELETE FROM user WHERE U- ID = ?ï¿½,
+//ï¿½hostVariablesï¿½: [U_ID]ï¿½
 app.delete("/User/delete/:id", (req, res) => {
     const U_ID = req.params.U_ID;
     const query = "DELETE FROM user WHERE U_ID = ?"
@@ -855,6 +849,8 @@ app.delete("/Owns/delete/:id", (req, res) => {
     })
 })
 
+
+//---------------------------------------------------------------------------------------------------------------------------------------------
 
 //EXAMPLE OF GET REQUEST
 app.get("/todos", (req, res) => {

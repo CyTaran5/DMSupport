@@ -12,6 +12,19 @@ import {
   MenuItem
 } from '@chakra-ui/react'; //imports from Chakra UI
 
+
+// const showWorld = async (id) => {
+//   try {
+//     await axios.get("http://localhost:8080/World" + id); //axios call to the backend
+//     window.location.reload(); //reloads the page
+//   }
+//   catch (err) {
+//     console.error(err.message); //log error
+//   }
+// };
+
+
+
 //Navbar component (only renders the nav bar rather than a full page)
 const TableSelect = () => {
   const [isOpen, setIsOpen] = useState(false); //state for the menu
@@ -33,6 +46,7 @@ const TableSelect = () => {
             variant="link"
             color="black"
             rightIcon={<svg width="5" height="5" viewBox="0 0 0 0" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>}
+            //onClick={()=>showWorld(todo.itemID)}
           >
           Worlds
         </Button>
