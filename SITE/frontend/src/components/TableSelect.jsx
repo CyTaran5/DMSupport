@@ -9,7 +9,8 @@ import {
   MenuButton,
   MenuDivider,
   MenuList,
-  MenuItem
+  MenuItem,
+  Tabs, TabList, TabPanels, Tab, TabPanel
 } from '@chakra-ui/react'; //imports from Chakra UI
 
 
@@ -32,63 +33,30 @@ const TableSelect = () => {
   const toggle = () => setIsOpen(!isOpen); //function to toggle the menu
 
   return (
-    <Flex as="nav" align="center" justify="space-between" wrap="wrap" padding="1rem" bg="pink.500" color="white">
-      <Flex align="center" mr={5}>
-        <Heading as="h1" size="lg" letterSpacing={'-.1rem'}>
-          Table Select
-        </Heading>
-      </Flex>
+    <Tabs defaultIndex={1} isFitted variant='enclosed' colorScheme='red' size='lg' align='center'>
+  <TabList>
+    <Tab>Worlds</Tab>
+    <Tab>Items</Tab>
+    <Tab>Scenarios</Tab>
+    <Tab>Entities</Tab>
+  </TabList>
 
-
-      {/* Worlds Button */}
-      <Box display={{ base: isOpen ? 'block' : 'none', md: 'flex' }} width={{ base: 'full', md: 'auto' }} alignItems="center">
-        <Button
-            variant="link"
-            color="black"
-            rightIcon={<svg width="5" height="5" viewBox="0 0 0 0" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>}
-            //onClick={()=>showWorld(todo.itemID)}
-          >
-          Worlds
-        </Button>
-      </Box>
-
-
-      {/* Items Button */}
-      <Box display={{ base: isOpen ? 'block' : 'none', md: 'flex' }} width={{ base: 'full', md: 'auto' }} alignItems="center">
-        <Button
-            variant="link"
-            color="black"
-            rightIcon={<svg width="5" height="5" viewBox="0 0 5 5" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>}
-          >
-          Items
-        </Button>
-      </Box>
-
-
-      {/* Entities Button */}
-      <Box display={{ base: isOpen ? 'block' : 'none', md: 'flex' }} width={{ base: 'full', md: 'auto' }} alignItems="center">
-        <Button
-            variant="link"
-            color="black"
-            rightIcon={<svg width="5" height="5" viewBox="0 0 5 5" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>}
-          >
-          Entities
-        </Button>
-      </Box>
-
-
-      {/* Campaigns Button */}
-      <Box display={{ base: isOpen ? 'block' : 'none', md: 'flex' }} width={{ base: 'full', md: 'auto' }} alignItems="center">
-        <Button
-            variant="link"
-            color="black"
-            rightIcon={<svg width="5" height="5" viewBox="0 0 5 5" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>}
-          >
-          Campaigns
-        </Button>
-      </Box>
-    </Flex>
-  );
+  <TabPanels>
+    <TabPanel>
+      <p>THESE ARE YOUR WORLDS!</p>
+    </TabPanel>
+    <TabPanel>
+      <p>THESE ARE YOUR ITEMS!</p>
+    </TabPanel>
+    <TabPanel>
+      <p>THESE ARE YOUR SCENARIOS!</p>
+    </TabPanel>
+    <TabPanel>
+      <p>THESE ARE YOUR ENTITIES!</p>
+    </TabPanel>
+  </TabPanels>
+</Tabs>
+      );
 };
 
 export default TableSelect;
