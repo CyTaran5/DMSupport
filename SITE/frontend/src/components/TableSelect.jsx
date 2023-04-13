@@ -65,18 +65,6 @@ const TableSelect = () => {
       </Box>
 
 
-      {/* Characters Button */}
-      <Box display={{ base: isOpen ? 'block' : 'none', md: 'flex' }} width={{ base: 'full', md: 'auto' }} alignItems="center">
-        <Button
-            variant="link"
-            color="black"
-            rightIcon={<svg width="5" height="5" viewBox="0 0 5 5" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>}
-          >
-          Characters
-        </Button>
-      </Box>
-
-
       {/* Entities Button */}
       <Box display={{ base: isOpen ? 'block' : 'none', md: 'flex' }} width={{ base: 'full', md: 'auto' }} alignItems="center">
         <Button
@@ -89,14 +77,14 @@ const TableSelect = () => {
       </Box>
 
 
-      {/* Scenarios Button */}
+      {/* Campaigns Button */}
       <Box display={{ base: isOpen ? 'block' : 'none', md: 'flex' }} width={{ base: 'full', md: 'auto' }} alignItems="center">
         <Button
             variant="link"
             color="black"
             rightIcon={<svg width="5" height="5" viewBox="0 0 5 5" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>}
           >
-          Scenarios
+          Campaigns
         </Button>
       </Box>
     </Flex>

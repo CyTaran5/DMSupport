@@ -81,8 +81,8 @@ app.delete("/World/delete", (req, res) => {
 
 
 //--------------------------------------------------------------------------------------------
-//Entity:
 
+//Entity:
 //Display Entity:
 //create view all_entities as select entity.E_Name, entity.Type, stat.S_Name, stat.S_Value from entity INNER JOIN stat on entity.E_ID = stat.E_ID where entity.U_ID = #
 app.get("/Entity", (req, res) => {
@@ -100,10 +100,9 @@ app.get("/Entity", (req, res) => {
 })
 
 //Create Entity:
-//INSERT INTO entity(E_Name, E_Details, Player_Notes, Type) Values(�-�, �-�, �-�, �-�);
-//Host variables: E_Name, E_Details, Player_Notes, Type.
 app.post("/Entity", (req, res) => {
-    const query = "INSERT INTO entity(E_Name, E_Details, Player_Notes, Type) Values(?, ?, ?, ?)"
+    const {E_Name, E_Details, Player_Notes, Type, UserID} = req.body;
+    const query = "INSERT INTO entity(E_Name, E_Details, Player_Notes, Type, UserID) VALUES (?, ?, ?, ?, ?)"
 
     const {
         E_Name,
@@ -122,10 +121,9 @@ app.post("/Entity", (req, res) => {
 })
 
 //Update Entity:
-//UPDATE entity SET() = � � where E_ID = #.
-//Host variables: host can choose to update any combination of  E_Name, E_Details, Player_Notes, or Type
-app.put("/Entity/update/:id", (req, res) => {
+app.put("/Entity/update", (req, res) => {
     
+    const {E_Name, E_Details, Player_Notes, Type, E_ID} = req.body;
     const query = "UPDATE entity SET E_Name = ?, E_Details = ?, Player_Notes = ?, Type = ? where E_ID = ?";
 
     const {
@@ -162,15 +160,16 @@ app.delete("/Entity/delete/:id", (req, res) => {
     })
 })
 
+//---------------------------------------------------------------------------------------------------
 
-//    Items:
+//Items:
 //Display Items:
 //CREATE VIEW all_items AS SELECT item.I_Name, stat.S_Name, stat.S_Value FROM item INNER JOIN stat ON item.I_ID = stat.I_ID WHERE item.U_ID = #
 app.get("/Items", (req, res) => {
     const { U_ID } = req.body;
     const query = "SELECT item.I_Name, stat.S_Name, stat.S_Value FROM item INNER JOIN stat ON item.I_ID = stat.I_ID WHERE item.U_ID = ?"
 
-    db.query(query, [U_ID], (err, result) => {
+    db.query(query, [UserID], (err, result) => {
         if (err) {
             console.log(err)
         } else {
@@ -180,10 +179,9 @@ app.get("/Items", (req, res) => {
 })
 
 //Create Items:
-//INSERT INTO item(I_Name, I_Details, Item_Notes, I_ID, User_ID)  Values("-", "-", �-", #, #).
-//Host variables: I_Name, I_Details, Item_Notes..
 app.post("/Items", (req, res) => {
-    const query = "INSERT INTO item(I_Name, I_Details, Item_Notes, I_ID, User_ID)  Values(?, ?, ?, ?, ?))"
+    const {I_Name, I_Details, Item_Notes, UserID} = req.body;
+    const query = "INSERT INTO item (I_Name, I_Details, Item_Notes, UserID) VALUES (?, ?, ?, ?)"
 
     const {
         I_Name,
@@ -204,11 +202,11 @@ app.post("/Items", (req, res) => {
 })
 
 //Update Items:
-//    UPDATE item SET() = � �.where I_ID = #.
 //Host variables: I_Name, I_Details, Item_Notes.
-app.put("/Items/update/:id", (req, res) => {
+app.put("/Items/update", (req, res) => {
+    const {I_Name, I_Details, Item_notes, I_ID} = req.body;
+    const query = "UPDATE item SET I_Name = ?, I_Details = ?, Item_notes = ? where I_ID = ?";
 
-    const query = "UPDATE item SET I_Name = ?, I_Details = ?, Item_Notes = ? where I_ID = ?";
 
     const {
         I_Name,
@@ -228,7 +226,7 @@ app.put("/Items/update/:id", (req, res) => {
 
 
 //Delete Items:
-//    DELETE FROM item WHERE I_ID = #
+//DELETE FROM item WHERE I_ID = #
 //Host presses specific delete button when sends I_ID as variable to the statement.
 app.delete("/Items/delete/:id", (req, res) => {
     const { I_ID } = req.body;
@@ -243,6 +241,7 @@ app.delete("/Items/delete/:id", (req, res) => {
     })
 })
 
+//---------------------------------------------------------------------------------------------------
 
 //    Locations:
 //Display Locations:
@@ -253,7 +252,7 @@ app.get("/Locations", (req, res) => {
     const query = "SELECT * FROM location WHERE U_ID = ?"
 
 
-    db.query(query, [U_ID], (err, result) => {
+    db.query(query, [W_ID], (err, result) => {
         if (err) {
             console.log(err)
         } else {
@@ -312,7 +311,7 @@ app.delete("/Locations/delete/:id", (req, res) => {
     const { L_ID } = req.body;
     const query = "DELETE FROM location WHERE L_ID = ?"
 
-    db.query(query, [L_ID], (err, result) => {
+    db.query(query, [C_ID], (err, result) => {
         if (err) {
             console.log(err)
         } else {
@@ -321,6 +320,7 @@ app.delete("/Locations/delete/:id", (req, res) => {
     })
 })
 
+//---------------------------------------------------------------------------------------------------
 
 //    Campaign:
 //Display Campaign:
@@ -330,7 +330,7 @@ app.get("/Campaign", (req, res) => {
     const query = "SELECT * FROM campaign WHERE W_ID = ?"
 
 
-    db.query(query, [W_ID], (err, result) => {
+    db.query(query, [U_ID], (err, result) => {
         if (err) {
             console.log(err)
         } else {
@@ -339,11 +339,11 @@ app.get("/Campaign", (req, res) => {
     })
 })
 
-//Create Campaign:
-//    INSERT INTO campaign(Story, C_Name, W_ID) VALUES(�-�, �-�).
-//Host variables(Story, C_Name)
-app.post("/Campaign", (req, res) => {
-    const query = "INSERT INTO campaign(Story, C_Name, W_ID) VALUES(?, ?, ?)"
+//Create Locations:
+//    INSERT INTO locations VALUES(L - Name, L_Description, L_ID) VALUES( �-�, �-�).
+//Host variables: L_Name, L_Description.
+app.post("/Locations", (req, res) => {
+    const query = "INSERT INTO locations VALUES(L_Name, L_Description) VALUES( ?, ?)"
 
     const {
         Story,
@@ -360,12 +360,12 @@ app.post("/Campaign", (req, res) => {
     })
 })
 
-//Update Campaign:
-//    UPDATE campaign SET() = � �.
-//    Host Variables: Story, C_Name.
-app.put("/Campaign/update/:id", (req, res) => {
+//Update Locations:
+//    UPDATE location SET() = � �.
+//    Host variables: L_Name, L_Description.
+app.put("/Locations/update/:id", (req, res) => {
     
-    const query = "UPDATE campaign SET Story = ?, C_Name = ? where C_ID = ?";
+    const query = "UPDATE location SET L_Name= ?, L_Description = ? where L_ID = ?";
 
     const {
         Story,
@@ -390,7 +390,7 @@ app.delete("/Campaign/delete/:id", (req, res) => {
     const { C_ID } = req.body;
     const query = "DELETE FROM world WHERE C_ID = ?"
 
-    db.query(query, [C_ID], (err, result) => {
+    db.query(query, [L_ID], (err, result) => {
         if (err) {
             console.log(err)
         } else {
