@@ -48,7 +48,7 @@ const Home = () => {
     };
 
     return (
-        <Box bg="blackAlpha.900" h="100%" minH="100vh" pb={5}>
+        <Box bg="white" h="100%" minH="100vh" pb={5}>
             <Navbar />
             <TableSelect /> 
                 {/* <form onSubmit={handleClick}>

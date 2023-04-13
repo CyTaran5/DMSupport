@@ -10,7 +10,16 @@ import {
   MenuDivider,
   MenuList,
   MenuItem,
-  Tabs, TabList, TabPanels, Tab, TabPanel
+  Tabs, TabList, TabPanels, Tab, TabPanel,
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
 } from '@chakra-ui/react'; //imports from Chakra UI
 
 
@@ -35,15 +44,38 @@ const TableSelect = () => {
   return (
     <Tabs defaultIndex={1} isFitted variant='enclosed' colorScheme='red' size='lg' align='center'>
   <TabList>
-    <Tab>Worlds</Tab>
+    <Tab _selected={{ color: 'white', bg: 'red.500' }} _unselected={{ color: 'white', bg: 'black.500' }}>Worlds</Tab>
     <Tab>Items</Tab>
     <Tab>Scenarios</Tab>
     <Tab>Entities</Tab>
+    <Tab >Tab 1</Tab>
   </TabList>
 
   <TabPanels>
     <TabPanel>
-      <p>THESE ARE YOUR WORLDS!</p>
+    <TableContainer>
+  <Table variant='simple'>
+    <Thead>
+      <Tr>
+        <Th>World Name</Th>
+      </Tr>
+    </Thead>
+    <Tbody>
+      <Tr>
+        <Td>World1</Td>
+        
+      </Tr>
+      <Tr>
+        <Td>World2</Td>
+        
+      </Tr>
+      <Tr>
+        <Td>World3</Td>
+
+      </Tr>
+    </Tbody>
+  </Table>
+</TableContainer>
     </TabPanel>
     <TabPanel>
       <p>THESE ARE YOUR ITEMS!</p>
