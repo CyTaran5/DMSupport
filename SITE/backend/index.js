@@ -33,7 +33,7 @@ db.connect(error => {
 app.get("/World", (req, res) => {
     const {UserID} = req.query;
     console.log("WORLD, U_ID:", UserID);
-    const query = "SELECT * FROM world WHERE UserID = ?";
+    const query = "SELECT W_Name AS 'World Name', Lore, W_ID AS World_ID FROM world WHERE UserID = ?";
 
     db.query(query, [UserID], (err, result) => {
         if (err) {
@@ -97,7 +97,7 @@ app.delete("/World/delete", (req, res) => {
 app.get("/Entity", (req, res) => {
     const {UserID} = req.query;
     console.log("Entity, U_ID:", UserID);
-    const query = "select entity.E_Name, entity.Type, stat.S_Name, stat.S_Value from entity INNER JOIN stat on entity.E_ID = stat.E_ID where entity.UserID = ?"
+    const query = "select entity.E_Name AS 'Entity Name', entity.Type, stat.S_Name AS 'Stat Name', stat.S_Value AS 'Stat Value', entity.E_ID as Entity_ID from entity INNER JOIN stat on entity.E_ID = stat.E_ID where entity.UserID = ?"
 
     db.query(query, [UserID], (err, result) => {
         if (err) {
@@ -142,7 +142,7 @@ app.put("/Entity/update", (req, res) => {
 //Delete Entity:
 //Delete FROM entity WHERE E_ID = #.
 //Host presses delete button when sends E_ID as variable to the statement.
-app.delete("/Entity/delete/:id", (req, res) => {
+app.delete("/Entity/delete", (req, res) => {
     const { E_ID } = req.body;
     const query = "Delete FROM entity WHERE E_ID = ?"
 
@@ -163,7 +163,7 @@ app.delete("/Entity/delete/:id", (req, res) => {
 app.get("/Items", (req, res) => {
     const { UserID } = req.query;
     console.log("Items, U_ID:", UserID);
-    const query = "SELECT item.I_Name, stat.S_Name, stat.S_Value FROM item INNER JOIN stat ON item.I_ID = stat.I_ID WHERE item.UserID = ?"
+    const query = "SELECT item.I_Name AS 'Item Name', stat.S_Name AS 'Stat Name', stat.S_Value AS 'Stat Value', item.I_ID AS Item_ID FROM item INNER JOIN stat ON item.I_ID = stat.I_ID WHERE item.UserID = ?"
 
     db.query(query, [UserID], (err, result) => {
         if (err) {
@@ -210,7 +210,7 @@ app.put("/Items/update", (req, res) => {
 //Delete Items:
 //DELETE FROM item WHERE I_ID = #
 //Host presses specific delete button when sends I_ID as variable to the statement.
-app.delete("/Items/delete/:id", (req, res) => {
+app.delete("/Items/delete", (req, res) => {
     const { I_ID } = req.body;
     const query = "DELETE FROM item WHERE I_ID = ?"
 
@@ -232,7 +232,7 @@ app.delete("/Items/delete/:id", (req, res) => {
 app.get("/Scenarios", (req, res) => {
     const {UserID} = req.query;
     console.log("Scenarios, U_ID:", UserID);
-    const query = "SELECT * FROM scenario WHERE UserID = ?"
+    const query = "SELECT S_Name AS 'Stat Name', S_ID AS Scenario_ID FROM scenario WHERE UserID = ?"
 
     db.query(query, [UserID], (err, result) => {
         if (err) {
@@ -291,7 +291,7 @@ app.put("/Scenarios/update/:id", (req, res) => {
 //Delete Scenarios:
 //DELETE FROM scenario WHERE S_ID = ?
 //Host presses specific delete button when sends S_ID as variable to the statement.
-app.delete("/Scenarios/delete/:id", (req, res) => {
+app.delete("/Scenarios/delete", (req, res) => {
     const { S_ID } = req.body;
     const query = "DELETE FROM scenario WHERE S_ID = ?"
 
