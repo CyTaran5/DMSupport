@@ -4,6 +4,7 @@ import axios from 'axios';
 import Navbar from '../components/Navbar';
 import ListItem from '../components/ListItem';
 import TableSelect from '../components/TableSelect';
+import DisplayTable from '../components/DisplayTable';
 import { 
     Box, 
     Input, 
@@ -48,9 +49,12 @@ const Home = () => {
     };
 
     return (
-        <Box bg="blackAlpha.900" h="100%" minH="100vh" pb={5}>
+        <Box bg="white" h="100%" minH="100vh" pb={5}>
             <Navbar />
-            <TableSelect /> 
+            <TableSelect />
+            <DisplayTable/>
+            
+            
                 {/* <form onSubmit={handleClick}>
                     <Input 
                         type="text" 
@@ -63,11 +67,11 @@ const Home = () => {
 
                     />
                 </form>  */}
-            <Flex direction="column" align="center">
+            {/* <Flex direction="column" align="center">
                 {todos.map((todo) => (
                     <ListItem todo={todo} />
                 ))}
-            </Flex>
+            </Flex> */}
         </Box>
     );
 

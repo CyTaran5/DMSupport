@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import {
   Box,
@@ -13,50 +14,67 @@ import {
   Tabs, TabList, TabPanels, Tab, TabPanel
 } from '@chakra-ui/react'; //imports from Chakra UI
 
-
-// const showWorld = async (id) => {
-//   try {
-//     await axios.get("http://localhost:8080/World" + id); //axios call to the backend
-//     window.location.reload(); //reloads the page
-//   }
-//   catch (err) {
-//     console.error(err.message); //log error
-//   }
-// };
-
-
+const U_ID = 2;
 
 //Navbar component (only renders the nav bar rather than a full page)
 const TableSelect = () => {
+  const getWorlds = async () => {
+    const url1 = `http://localhost:8080/World?UserID=` + U_ID;
+    
+    try {
+      await axios.get(url1); //axios call to the backend
+    }
+    catch (err) {
+      console.error(err.message); //log error
+    }
+  }
+
+  const getEntities = async () => {
+    const url2 = `http://localhost:8080/Entity?UserID=` + U_ID;
+    try {
+      await axios.get(url2); //axios call to the backend
+    }
+    catch (err) {
+      console.error(err.message); //log error
+    }
+  }
+
+  const getItems = async () => {
+    const url3 = `http://localhost:8080/Items?UserID=` + U_ID;
+    
+    try {
+      await axios.get(url3); //axios call to the backend
+    }
+    catch (err) {
+      console.error(err.message); //log error
+    }
+  }
+
+  const getScenerios = async () => {
+    const url4 = `http://localhost:8080/Scenarios?UserID=` + U_ID;
+    
+    try {
+      await axios.get(url4); //axios call to the backend
+    }
+    catch (err) {
+      console.error(err.message); //log error
+    }
+  }
+
   const [isOpen, setIsOpen] = useState(false); //state for the menu
 
   const toggle = () => setIsOpen(!isOpen); //function to toggle the menu
 
   return (
-    <Tabs defaultIndex={1} isFitted variant='enclosed' colorScheme='red' size='lg' align='center'>
+  <Tabs defaultIndex={1} isFitted backgroundColor= {'red.100'} colorScheme='red' size='lg' align='center' position="relative" variant="unstyled">
   <TabList>
-    <Tab>Worlds</Tab>
-    <Tab>Items</Tab>
-    <Tab>Scenarios</Tab>
-    <Tab>Entities</Tab>
+    <Tab _selected={{color: 'white', bg: 'red.500'}} onClick={() => getWorlds()}>Worlds</Tab>
+    <Tab _selected={{color: 'white', bg: 'red.500'}} onClick={() => getItems()}>Items</Tab>
+    <Tab _selected={{color: 'white', bg: 'red.500'}} onClick={() => getScenerios()}>Scenarios</Tab>
+    <Tab _selected={{color: 'white', bg: 'red.500'}} onClick={() => getEntities()}>Characters & Entities</Tab>
   </TabList>
-
-  <TabPanels>
-    <TabPanel>
-      <p>THESE ARE YOUR WORLDS!</p>
-    </TabPanel>
-    <TabPanel>
-      <p>THESE ARE YOUR ITEMS!</p>
-    </TabPanel>
-    <TabPanel>
-      <p>THESE ARE YOUR SCENARIOS!</p>
-    </TabPanel>
-    <TabPanel>
-      <p>THESE ARE YOUR ENTITIES!</p>
-    </TabPanel>
-  </TabPanels>
 </Tabs>
-      );
+  );
 };
 
 export default TableSelect;

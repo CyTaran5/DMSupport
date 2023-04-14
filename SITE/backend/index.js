@@ -20,14 +20,22 @@ app.get("/", (req, res) => {
     res.json({ message: "Backend is up." })
 })
 
+db.connect(error => {
+    if (error) throw error;
+    console.log('Connected to database');
+})
+
+
 //-----------------------------------------------------------------------------------------------------------------------
 
 //World:
 //Display World: 
 app.get("/World", (req, res) => {
-    const query = "SELECT * FROM world"
+    const {UserID} = req.query;
+    console.log("WORLD, U_ID:", UserID);
+    const query = "SELECT * FROM world WHERE UserID = ?";
 
-    db.query(query, (err, result) => {
+    db.query(query, [UserID], (err, result) => {
         if (err) {
             console.log(err)
         } else {
@@ -86,11 +94,11 @@ app.delete("/World/delete", (req, res) => {
 //Display Entity:
 //create view all_entities as select entity.E_Name, entity.Type, stat.S_Name, stat.S_Value from entity INNER JOIN stat on entity.E_ID = stat.E_ID where entity.U_ID = #
 app.get("/Entity", (req, res) => {
-    const { E_ID } = req.body;
-    const query = "select entity.E_Name, entity.Type, stat.S_Name, stat.S_Value from entity INNER JOIN stat on entity.E_ID = stat.E_ID where entity.U_ID = ?"
+    const {UserID} = req.query;
+    console.log("Entity, U_ID:", UserID);
+    const query = "select entity.E_Name, entity.Type, stat.S_Name, stat.S_Value from entity INNER JOIN stat on entity.E_ID = stat.E_ID where entity.UserID = ?"
 
-
-    db.query(query, [E_ID], (err, result) => {
+    db.query(query, [UserID], (err, result) => {
         if (err) {
             console.log(err)
         } else {
@@ -104,12 +112,6 @@ app.post("/Entity", (req, res) => {
     const {E_Name, E_Details, Player_Notes, Type, UserID} = req.body;
     const query = "INSERT INTO entity(E_Name, E_Details, Player_Notes, Type, UserID) VALUES (?, ?, ?, ?, ?)"
 
-    const {
-        E_Name,
-        E_Details,
-        Player_Notes,
-        Type
-    } = req.body;
 
     db.query(query, [E_Name, E_Details, Player_Notes, Type], (err, result) => {
         if (err) {
@@ -125,14 +127,6 @@ app.put("/Entity/update", (req, res) => {
     
     const {E_Name, E_Details, Player_Notes, Type, E_ID} = req.body;
     const query = "UPDATE entity SET E_Name = ?, E_Details = ?, Player_Notes = ?, Type = ? where E_ID = ?";
-
-    const {
-        E_Name,
-        E_Details,
-        Player_Notes,
-        Type,
-        E_ID
-    } = req.body;
 
     db.query(query, [E_Name, E_Details, Player_Notes, Type, E_ID], (err, result) => {
         if (err) {
@@ -166,8 +160,9 @@ app.delete("/Entity/delete/:id", (req, res) => {
 //Display Items:
 //CREATE VIEW all_items AS SELECT item.I_Name, stat.S_Name, stat.S_Value FROM item INNER JOIN stat ON item.I_ID = stat.I_ID WHERE item.U_ID = #
 app.get("/Items", (req, res) => {
-    const { U_ID } = req.body;
-    const query = "SELECT item.I_Name, stat.S_Name, stat.S_Value FROM item INNER JOIN stat ON item.I_ID = stat.I_ID WHERE item.U_ID = ?"
+    const { UserID } = req.query;
+    console.log("Items, U_ID:", UserID);
+    const query = "SELECT item.I_Name, stat.S_Name, stat.S_Value FROM item INNER JOIN stat ON item.I_ID = stat.I_ID WHERE item.UserID = ?"
 
     db.query(query, [UserID], (err, result) => {
         if (err) {
@@ -183,13 +178,6 @@ app.post("/Items", (req, res) => {
     const {I_Name, I_Details, Item_Notes, UserID} = req.body;
     const query = "INSERT INTO item (I_Name, I_Details, Item_Notes, UserID) VALUES (?, ?, ?, ?)"
 
-    const {
-        I_Name,
-        I_Details,
-        Item_Notes,
-        I_ID,
-        User_ID
-    } = req.body;
 
     db.query(query, [I_Name, I_Details, Item_Notes, I_ID,
         User_ID], (err, result) => {
@@ -207,13 +195,6 @@ app.put("/Items/update", (req, res) => {
     const {I_Name, I_Details, Item_notes, I_ID} = req.body;
     const query = "UPDATE item SET I_Name = ?, I_Details = ?, Item_notes = ? where I_ID = ?";
 
-
-    const {
-        I_Name,
-        I_Details,
-        Item_Notes,
-        I_ID
-    } = req.body;
 
     db.query(query, [I_Name, I_Details, Item_Notes, I_ID], (err, result) => {
         if (err) {
@@ -243,9 +224,90 @@ app.delete("/Items/delete/:id", (req, res) => {
 
 //---------------------------------------------------------------------------------------------------
 
-//    Locations:
+//Scenarios
+//Display Scenarios:
+//CREATE VIEW all_scenarios SELECT * FROM scenario WHERE UID = #.
+//Host Variables = U_ID
+app.get("/Scenarios", (req, res) => {
+    const {UserID} = req.query;
+    console.log("Scenarios, U_ID:", UserID);
+    const query = "SELECT * FROM scenario WHERE UserID = ?"
+
+    db.query(query, [UserID], (err, result) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.json(result)
+        }
+    })
+})
+
+//Create Scenarios:
+//INSERT INTO scenario(S_Name, S_ID, U_ID, L_ID) VALUES(�-�, #, #, #).
+//Host Variables: S_Name, L_ID
+app.post("/Scenarios", (req, res) => {
+    const query = "INSERT INTO scenario(S_Name, U_ID, L_ID) VALUES(?, ?, ?)"
+
+    const {
+        S_Name,
+        U_ID,
+        L_ID
+    } = req.body;
+
+    db.query(query, [S_Name, U_ID, L_ID], (err, result) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.json(result)
+        }
+    })
+})
+
+//Update Scenarios:
+//UPDATE scenario SET() = � �.
+//Host Variables: S_Name, S_ID, L_ID.
+app.put("/Scenarios/update/:id", (req, res) => {
+
+    const query = "UPDATE scenario SET S_Name, U_ID, L_ID where S_ID = ?";
+
+    const {
+        S_Name,
+        U_ID,
+        L_ID,
+        S_ID
+    } = req.body;
+
+    db.query(query, [S_Name, U_ID, L_ID, S_ID], (err, result) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.json(result)
+        }
+    })
+})
+
+
+//Delete Scenarios:
+//DELETE FROM scenario WHERE S_ID = ?
+//Host presses specific delete button when sends S_ID as variable to the statement.
+app.delete("/Scenarios/delete/:id", (req, res) => {
+    const { S_ID } = req.body;
+    const query = "DELETE FROM scenario WHERE S_ID = ?"
+
+    db.query(query, [S_ID], (err, result) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.json(result)
+        }
+    })
+})
+
+//--------------------------------------------------------------------------------------------------
+
+//Locations:
 //Display Locations:
-//    CREATE VIEW all_locations AS SELECT * FROM location WHERE U_ID = #.
+//CREATE VIEW all_locations AS SELECT * FROM location WHERE U_ID = #.
 //Host variables = U_ID
 app.get("/Locations", (req, res) => {
     const { U_ID } = req.body;
@@ -399,86 +461,7 @@ app.delete("/Campaign/delete/:id", (req, res) => {
     })
 })
 
-
-//    Scenarios
-//Display Scenarios:
-//CREATE VIEW all_scenarios SELECT * FROM scenario WHERE UID = #.
-//Host Variables = U_ID
-app.get("/Scenarios", (req, res) => {
-    const { U_ID } = req.body;
-    const query = "SELECT * FROM scenario WHERE U_ID = ?"
-
-
-    db.query(query, [U_ID], (err, result) => {
-        if (err) {
-            console.log(err)
-        } else {
-            res.json(result)
-        }
-    })
-})
-
-//Create Scenarios:
-//INSERT INTO scenario(S_Name, S_ID, U_ID, L_ID) VALUES(�-�, #, #, #).
-//Host Variables: S_Name, L_ID
-app.post("/Scenarios", (req, res) => {
-    const query = "INSERT INTO scenario(S_Name, U_ID, L_ID) VALUES(?, ?, ?)"
-
-    const {
-        S_Name,
-        U_ID,
-        L_ID
-    }
-
-    db.query(query, [S_Name, U_ID, L_ID], (err, result) => {
-        if (err) {
-            console.log(err)
-        } else {
-            res.json(result)
-        }
-    })
-})
-
-//Update Scenarios:
-//UPDATE scenario SET() = � �.
-//Host Variables: S_Name, S_ID, L_ID.
-app.put("/Scenarios/update/:id", (req, res) => {
-
-    const query = "UPDATE scenario SET S_Name, U_ID, L_ID where S_ID = ?";
-
-    const {
-        S_Name,
-        U_ID,
-        L_ID,
-        S_ID
-    } = req.body;
-
-    db.query(query, [S_Name, U_ID, L_ID, S_ID], (err, result) => {
-        if (err) {
-            console.log(err)
-        } else {
-            res.json(result)
-        }
-    })
-})
-
-
-//Delete Scenarios:
-//DELETE FROM scenario WHERE S_ID = ?
-//Host presses specific delete button when sends S_ID as variable to the statement.
-app.delete("/Scenarios/delete/:id", (req, res) => {
-    const { S_ID } = req.body;
-    const query = "DELETE FROM scenario WHERE S_ID = ?"
-
-    db.query(query, [S_ID], (err, result) => {
-        if (err) {
-            console.log(err)
-        } else {
-            res.json(result)
-        }
-    })
-})
-
+//------------------------------------------------------------------------------------------
 
 //existsin:
 //Display existsin:
