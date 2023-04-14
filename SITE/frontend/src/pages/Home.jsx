@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import ListItem from '../components/ListItem';
 import TableSelect from '../components/TableSelect';
 import DisplayTable from '../components/DisplayTable';
+import EditModel from "../components/EditModel";
 import { 
     Box, 
     Input, 

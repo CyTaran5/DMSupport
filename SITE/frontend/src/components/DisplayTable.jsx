@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
+import EditModal from "./EditModel";
+
 import { Link } from 'react-router-dom';
 import {
     Button,
@@ -17,10 +19,6 @@ import {
     TableContainer,
   } from "@chakra-ui/react"
 
-
-  const handleEdit = (data) => {
-    console.log('Edit:', data);
-  };
 
   const handleDelete = (data, currentTable) => {
     //data = id to delete.
@@ -68,7 +66,18 @@ import {
     }
   };
 
+
+//-----------------------------------------------------------------------------------------------------------------------------------
+
   const DisplayTable = ({jsonTableData, currentTable}) => {
+
+  const handleEdit = (jsonTableData) => {
+    setJsonEditData(jsonTableData);
+    setEditModalOpen(true);
+  };
+
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [jsonEditData, setJsonEditData] = useState(null);
 
   if (!jsonTableData || jsonTableData.length === 0) {
     return (
@@ -80,6 +89,7 @@ import {
   const headers = jsonTableData.length > 0 ? Object.keys(jsonTableData[0]) : [];
 
   return (
+  <div>
     <TableContainer>
       <Table variant = 'simple'>
         <Thead>
@@ -122,6 +132,11 @@ import {
         </Tbody>
       </Table>
     </TableContainer>
+
+    {editModalOpen && (
+    <EditModal isOpen={editModalOpen} jsonTableData={jsonEditData} onClose={() => setEditModalOpen(false)} />
+    )}
+  </div>
   )
 };
 
