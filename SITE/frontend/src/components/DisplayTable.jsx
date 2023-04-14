@@ -2,6 +2,10 @@ import { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import {
+    Button,
+    ButtonGroup,
+    Spacer,
+    Flex,
     Table,
     Thead,
     Tbody,
@@ -14,8 +18,57 @@ import {
   } from "@chakra-ui/react"
 
 
-const DisplayTable = ({jsonTableData}) => {
-  console.log("Display table has json data:", jsonTableData);
+  const handleEdit = (data) => {
+    console.log('Edit:', data);
+  };
+
+  const handleDelete = (data, currentTable) => {
+    //data = id to delete.
+    const id = data;
+    if(currentTable === 1) {
+      console.log('Deleting World with ID of:', data);
+      axios.delete('http://localhost:8080/World/delete', {data: {W_ID : id}}).then(response => {
+        console.log('Delete success:', response.data);
+      })
+      .catch(error => {
+        console.error('Delete error:', error);
+      });
+
+    }
+
+    if(currentTable === 2) {
+      console.log('Deleting Item with ID of:', data);
+      
+      axios.delete('http://localhost:8080/Items/delete', {data: {I_ID : id}}).then(response => {
+        console.log('Delete success:', response.data);
+      })
+      .catch(error => {
+        console.error('Delete error:', error);
+      });
+    }
+
+    if(currentTable === 3) {
+      console.log('Deleting Scenerio with ID of:', data);
+      axios.delete('http://localhost:8080/Scenarios/delete', {data: {S_ID : id}}).then(response => {
+        console.log('Delete success:', response.data);
+      })
+      .catch(error => {
+        console.error('Delete error:', error);
+      });
+    }
+
+    if(currentTable === 4) {
+      console.log('Delete Entity', data);
+      axios.delete('http://localhost:8080/Entity/delete', {data: {E_ID : id}}).then(response => {
+        console.log('Delete success:', response.data);
+      })
+      .catch(error => {
+        console.error('Delete error:', error);
+      });
+    }
+  };
+
+  const DisplayTable = ({jsonTableData, currentTable}) => {
 
   if (!jsonTableData || jsonTableData.length === 0) {
     return (
@@ -28,7 +81,7 @@ const DisplayTable = ({jsonTableData}) => {
 
   return (
     <TableContainer>
-      <Table varient = 'simple'>
+      <Table variant = 'simple'>
         <Thead>
           <Tr>
             {headers.map((header, index) => (
@@ -43,6 +96,27 @@ const DisplayTable = ({jsonTableData}) => {
               {headers.map((header, index) => (
                 <Td key={index}>{data[header]}</Td>
               ))}
+              <Td>
+                <Flex>
+                <Button
+                  variant='outline'
+                  colorScheme='blue'
+                  aria-label="Edit"
+                  onClick={() => handleEdit(data)}
+                >
+                  Edit
+                </Button>
+                <Spacer />
+                <Button
+                  variant='outline'
+                  colorScheme='red'
+                  aria-label="Delete"
+                  onClick={() => handleDelete(data.World_ID || data.Item_ID || data.Entity_ID || data.Scenario_ID, currentTable)}
+                >
+                  Delete
+                </Button>
+                </Flex>
+              </Td>
             </Tr>
           ))}
         </Tbody>

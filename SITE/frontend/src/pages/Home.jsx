@@ -13,17 +13,19 @@ import {
 
 const Home = () => {
     const [jsonTableData, setJsonTableData] = useState(null);
+    const [currentTable, setCurrentTable] = useState(null);
+
     
-    const handleJsonReceived = (data) => {
-        console.log("Parent recieved JSON data:", data);
+    const handleJsonReceived = (data, whichTableSelected) => {
         setJsonTableData(data);
+        setCurrentTable(whichTableSelected);
     }
 
     return (
         <Box bg="white" h="100%" minH="100vh" pb={5}>
             <Navbar />
             <TableSelect onJsonDataReceived={handleJsonReceived} />
-            <DisplayTable jsonTableData={jsonTableData}/>
+            <DisplayTable jsonTableData={jsonTableData} currentTable={currentTable}/>
         </Box>
     );
 

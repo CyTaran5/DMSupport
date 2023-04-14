@@ -33,7 +33,7 @@ const TableSelect = ({onJsonDataReceived}) => {
     
     try {
       const WorldGet = await axios.get(url1); //axios call to the backend
-      onJsonDataReceived(WorldGet.data);
+      onJsonDataReceived(WorldGet.data, 1);
     }
     catch (err) {
       console.error(err.message); //log error
@@ -44,7 +44,7 @@ const TableSelect = ({onJsonDataReceived}) => {
     const url2 = `http://localhost:8080/Entity?UserID=` + U_ID;
     try {
       const EntitiesGet = await axios.get(url2); //axios call to the backend
-      onJsonDataReceived(EntitiesGet.data);
+      onJsonDataReceived(EntitiesGet.data, 4);
     }
     catch (err) {
       console.error(err.message); //log error
@@ -56,7 +56,7 @@ const TableSelect = ({onJsonDataReceived}) => {
     
     try {
       const ItemGet = await axios.get(url3); //axios call to the backend
-      onJsonDataReceived(ItemGet.data);
+      onJsonDataReceived(ItemGet.data, 2);
     }
     catch (err) {
       console.error(err.message); //log error
@@ -68,7 +68,7 @@ const TableSelect = ({onJsonDataReceived}) => {
     
     try {
       const SceneriosGet = await axios.get(url4); //axios call to the backend
-      onJsonDataReceived(SceneriosGet.data);
+      onJsonDataReceived(SceneriosGet.data, 3);
     }
     catch (err) {
       console.error(err.message); //log error
