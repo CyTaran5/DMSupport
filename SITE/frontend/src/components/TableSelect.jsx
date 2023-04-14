@@ -26,12 +26,14 @@ import {
 const U_ID = 2;
 
 //Navbar component (only renders the nav bar rather than a full page)
-const TableSelect = () => {
+const TableSelect = ({onJsonDataReceived}) => {
+  
   const getWorlds = async () => {
     const url1 = `http://localhost:8080/World?UserID=` + U_ID;
     
     try {
-      await axios.get(url1); //axios call to the backend
+      const WorldGet = await axios.get(url1); //axios call to the backend
+      onJsonDataReceived(WorldGet.data);
     }
     catch (err) {
       console.error(err.message); //log error
@@ -41,7 +43,8 @@ const TableSelect = () => {
   const getEntities = async () => {
     const url2 = `http://localhost:8080/Entity?UserID=` + U_ID;
     try {
-      await axios.get(url2); //axios call to the backend
+      const EntitiesGet = await axios.get(url2); //axios call to the backend
+      onJsonDataReceived(EntitiesGet.data);
     }
     catch (err) {
       console.error(err.message); //log error
@@ -52,7 +55,8 @@ const TableSelect = () => {
     const url3 = `http://localhost:8080/Items?UserID=` + U_ID;
     
     try {
-      await axios.get(url3); //axios call to the backend
+      const ItemGet = await axios.get(url3); //axios call to the backend
+      onJsonDataReceived(ItemGet.data);
     }
     catch (err) {
       console.error(err.message); //log error
@@ -63,7 +67,8 @@ const TableSelect = () => {
     const url4 = `http://localhost:8080/Scenarios?UserID=` + U_ID;
     
     try {
-      await axios.get(url4); //axios call to the backend
+      const SceneriosGet = await axios.get(url4); //axios call to the backend
+      onJsonDataReceived(SceneriosGet.data);
     }
     catch (err) {
       console.error(err.message); //log error
