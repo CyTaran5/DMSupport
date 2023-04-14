@@ -11,7 +11,16 @@ import {
   MenuDivider,
   MenuList,
   MenuItem,
-  Tabs, TabList, TabPanels, Tab, TabPanel
+  Tabs, TabList, TabPanels, Tab, TabPanel,
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
 } from '@chakra-ui/react'; //imports from Chakra UI
 
 const U_ID = 2;
