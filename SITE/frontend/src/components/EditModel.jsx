@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import {
   Modal,
   Text,
@@ -13,7 +14,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 
-const EditModal = ({ isOpen, onClose, jsonTableData }) => {
+const EditModal = ({ isOpen, onClose, jsonTableData, currentTab}) => {
   // Use the useDisclosure hook to handle modal visibility
   const { isOpen: modalIsOpen, onClose: closeModal } = useDisclosure();
 
@@ -28,13 +29,58 @@ const EditModal = ({ isOpen, onClose, jsonTableData }) => {
 
   // Function to handle save button click
   const handleSave = () => {
-    // Call a function to update the data with editedData
-    // You can pass editedData to your backend API for update
+    const updates = [];
+
+    for (const key in editedData) {
+      const update = {
+        columnName: key,
+        oldValue: jsonTableData[key],
+        newValue: editedData[key]
+      };
+
+      updates.push(update);
+    }
+    
     console.log('Edited Data:', editedData);
+    console.log("Current Tab:", currentTab);
+
+    if(currentTab === 1) {
+      const formattedUpdates = updates.map(update => {
+        if (update.columnName === 'W_Name') {
+          update.order = 1;
+        } else if (update.columnName === 'Lore') {
+          update.order = 2;
+        }
+        return update;
+      }).sort((a, b) => {
+        return a.order - b.order;
+      });
+
+      axios.put('http://localhost:8080/World/update', { updates: formattedUpdates })
+        .then((response) => {
+        console.log('Data updated successfully:', response);
+        onClose(); // Close the modal
+      })
+      .catch((error) => {
+        console.error('Failed to update data:', error);
+      });
+    }
+
+    if (currentTab === 2) {
+
+    }
+
+    if (currentTab === 3) {
+
+    }
+
+    if (currentTab === 4) {
+
+    }
+
     onClose(); // Close the modal
   };
 
-  console.log('Working with:', jsonTableData);
 
   return (
     <Modal isOpen={isOpen || modalIsOpen} onClose={onClose || closeModal}>

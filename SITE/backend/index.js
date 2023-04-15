@@ -61,8 +61,32 @@ app.post("/World", (req, res) => {
 
 //Update World:
 app.put("/World/update", (req, res) => {
-    
-    const {W_Name, Lore, W_ID} = req.body;
+    let W_Name, Lore, W_ID;
+    const updates = req.body.updates;
+    updates.forEach((update, index) => {
+        const columnName = update.columnName;
+        const oldValue = update.oldValue;
+        const newValue = update.newValue;
+
+        if(index === 0) {
+            W_Name = newValue;
+        }
+
+        if(index === 1) {
+            Lore = newValue;
+        }
+
+        if(index === 2) {
+            W_ID = newValue;
+        }
+        console.log(index);
+        console.log(`Updating column "${columnName}" from "${oldValue}" to "${newValue}"`);
+    });
+
+    console.log(W_Name);
+    console.log(Lore);
+    console.log(W_ID);
+
     const query = "UPDATE world SET W_Name = ?, Lore = ? WHERE W_ID = ?";
 
     db.query(query, [W_Name, Lore, W_ID], (err, result) => {

@@ -73,11 +73,13 @@ import {
 
   const handleEdit = (jsonTableData) => {
     setJsonEditData(jsonTableData);
+    setCurrentTab(currentTable);
     setEditModalOpen(true);
   };
 
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [jsonEditData, setJsonEditData] = useState(null);
+  const [currentTab, setCurrentTab] = useState(null);
 
   if (!jsonTableData || jsonTableData.length === 0) {
     return (
@@ -134,7 +136,7 @@ import {
     </TableContainer>
 
     {editModalOpen && (
-    <EditModal isOpen={editModalOpen} jsonTableData={jsonEditData} onClose={() => setEditModalOpen(false)} />
+    <EditModal isOpen={editModalOpen} jsonTableData={jsonEditData} currentTab={currentTab} onClose={() => setEditModalOpen(false)} />
     )}
   </div>
   )
