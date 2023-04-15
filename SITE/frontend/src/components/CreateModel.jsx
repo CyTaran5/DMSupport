@@ -21,14 +21,19 @@ const EditModal = ({ isOpen, onClose, jsonTableData, currentTab}) => {
   // State variables to track edited data
   const [editedData, setEditedData] = useState({});
 
-  // Function to handle data field changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditedData({ ...editedData, [name]: value });
+  const [column1Data, setColumn1Data] = useState('');
+  const [column2Data, setColumn2Data] = useState('');
+
+  const handleChangeColumn1 = (e) => {
+    setColumn1Data(e.target.value);
+  };
+
+  const handleChangeColumn2 = (e) => {
+    setColumn2Data(e.target.value);
   };
 
   // Function to handle save button click
-  const handleSave = () => {
+  const handleSave = async () => {
     const updates = [];
 
     for (const key in editedData) {
@@ -41,22 +46,12 @@ const EditModal = ({ isOpen, onClose, jsonTableData, currentTab}) => {
       updates.push(update);
     }
     
-    console.log('Edited Data:', editedData);
+    console.log('World Name:', column1Data);
+    console.log('Lore:', column2Data);
     console.log("Current Tab:", currentTab);
 
     if(currentTab === 1) {
-      const formattedUpdates = updates.map(update => {
-        if (update.columnName === 'W_Name') {
-          update.order = 1;
-        } else if (update.columnName === 'Lore') {
-          update.order = 2;
-        }
-        return update;
-      }).sort((a, b) => {
-        return a.order - b.order;
-      });
-
-      axios.put('http://localhost:8080/World/update', { updates: formattedUpdates })
+      axios.post('http://localhost:8080/World', { W_Name: column1Data, Lore: column2Data})
         .then((response) => {
         console.log('Data updated successfully:', response);
         onClose(); // Close the modal
@@ -81,44 +76,40 @@ const EditModal = ({ isOpen, onClose, jsonTableData, currentTab}) => {
     onClose(); // Close the modal
   };
 
-  console.log(currentTab);
-
-  return (
-    <Modal isOpen={isOpen || modalIsOpen} onClose={onClose || closeModal}>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>Create</ModalHeader>
-        <ModalBody>
-        <Stack spacing={3}>
-            {/* Generate input spaces dynamically based on column names */}
-            {Object.keys(jsonTableData).map((columnName) => (
-              <Stack direction='row' alignItems='center' key={columnName}>
-                {/* Display column name as label */}
-                <Text>{columnName}: </Text>
-                <Input
-                  placeholder={jsonTableData[columnName]} // Set placeholder to data value
-                  size='sm'
-                  border='1px solid #000' // Add border property here
-                  onChange={handleChange}
-                  name={columnName}
-                  value={editedData[columnName] || ''}
-                />
+  if(currentTab === 1) {
+    return (
+      <Modal isOpen={isOpen || modalIsOpen} onClose={onClose || closeModal}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Create</ModalHeader>
+          <ModalBody>
+            <Stack spacing={3} direction="column">
+              <Stack spacing={1} direction="row">
+                <Text noWrap>World Name:</Text>
+                <Input size="sm" border="1px solid #000" value={column1Data} onChange={handleChangeColumn1}/>
               </Stack>
-            ))}
-          </Stack>
-        </ModalBody>
-        <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={onClose || closeModal}>
-            Close
-          </Button>
-          {/* Add your Save or Update button here */}
-          <Button colorScheme="green" onClick={handleSave}>
-            Save
-          </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
-  );
+
+              <Stack spacing={1} direction="row">
+                <Text noWrap>Lore:</Text>
+                <Input size="sm" border="1px solid #000" value={column2Data} onChange={handleChangeColumn2} />
+              </Stack>
+            </Stack>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onClose || closeModal}>
+              Close
+            </Button>
+            {/* Add your Save or Update button here */}
+            <Button colorScheme="green" onClick={handleSave}>
+              Save
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    );
+  }
+
+
 };
 
 export default EditModal;

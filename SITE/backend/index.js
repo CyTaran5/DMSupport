@@ -25,6 +25,7 @@ db.connect(error => {
     console.log('Connected to database');
 })
 
+const Current_U_ID = 2;
 
 //-----------------------------------------------------------------------------------------------------------------------
 
@@ -47,7 +48,9 @@ app.get("/World", (req, res) => {
 
 //Create World:
 app.post("/World", (req, res) => {
-    const {W_Name, Lore, UserID} = req.body;
+    const W_Name = req.body.W_Name;
+    const Lore = req.body.Lore;
+    const UserID = Current_U_ID;
     const query = "INSERT INTO world(W_Name, Lore, UserID) VALUES (?, ?, ?)"
 
     db.query(query, [W_Name, Lore, UserID], (err, result) => {

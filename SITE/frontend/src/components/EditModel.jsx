@@ -22,13 +22,13 @@ const EditModal = ({ isOpen, onClose, jsonTableData, currentTab}) => {
   const [editedData, setEditedData] = useState({});
 
   // Function to handle data field changes
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const { name, value } = e.target;
     setEditedData({ ...editedData, [name]: value });
   };
 
   // Function to handle save button click
-  const handleSave = () => {
+  const handleSave = async () => {
     const updates = [];
 
     for (const key in editedData) {
