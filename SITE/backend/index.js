@@ -25,7 +25,7 @@ db.connect(error => {
     console.log('Connected to database');
 })
 
-const Current_U_ID = 2;
+const Current_U_ID = 2; //Other USER ID change place is in TableSelect.
 
 //-----------------------------------------------------------------------------------------------------------------------
 
