@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
 import EditModal from "./EditModel";
+import CreateModel from "./CreateModel";
+import '../footer.css';
 
 import { Link } from 'react-router-dom';
 import {
@@ -77,6 +79,13 @@ import {
     setEditModalOpen(true);
   };
 
+  const handleCreate = (jsonTableData, currentTable) => {
+    setJsonEditData(jsonTableData);
+    setCurrentTab(currentTable);
+    setCreateModelOpen(true);
+  }
+
+  const [createModelOpen, setCreateModelOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [jsonEditData, setJsonEditData] = useState(null);
   const [currentTab, setCurrentTab] = useState(null);
@@ -85,6 +94,15 @@ import {
     return (
       <div>
         <h1>No data available</h1>
+
+        <div className="footer">
+          <Button bg='#ffeaea' _hover={{ bg: '#ffeaea' }} currentTab={currentTab} onClick={() => handleCreate(jsonTableData,currentTable)}>Add New Entry</Button>
+        </div>
+
+        {createModelOpen && (
+          <CreateModel isOpen={createModelOpen} currentTab={currentTab} onClose={() => setCreateModelOpen(false)} />
+        )}
+
       </div>
     );
   }
@@ -134,6 +152,15 @@ import {
         </Tbody>
       </Table>
     </TableContainer>
+
+    <div className="footer">
+        <Button bg='#ffeaea' _hover={{ bg: '#ffeaea' }} currentTab={currentTab} onClick={() => handleCreate(jsonTableData,currentTable)}>Add New Entry</Button>
+    </div>
+
+    {createModelOpen && (
+    <CreateModel isOpen={createModelOpen} jsonTableData={jsonEditData} currentTab={currentTab} onClose={() => setCreateModelOpen(false)} />
+    )}
+
 
     {editModalOpen && (
     <EditModal isOpen={editModalOpen} jsonTableData={jsonEditData} currentTab={currentTab} onClose={() => setEditModalOpen(false)} />
